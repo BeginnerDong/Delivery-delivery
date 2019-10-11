@@ -1,0 +1,22 @@
+
+
+/* 地址薄 */
+.addressLis li{ padding: 15px 4%;box-sizing: border-box;background: #fff; margin-bottom: 10px;}
+.addressLis li .name{ font-size: 14px; font-weight: normal;}
+.addressLis li .phone{ font-size: 13px; margin-left: 20px;}
+.addressLis li .adrs{font-size: 13px; margin:5px 0 10px 0;}
+.addressLis li .xing{width: 16px; height: 16px; display: block;}
+.addressLis li .right{ display: flex; justify-content: flex-end; align-items: center; font-size: 12px;}
+.addressLis li .right .tt{display: flex; align-items: center; color: #999;}
+.addressLis li .right .tt:first-child{ margin-right: 30px;}
+.addressLis li .right .tt img{width: 15px; height: 15px; display: block; margin-right: 5px;}
+
+
+/* 添加地址 */
+.addressAdd li{ padding: 15px 4%;border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;}
+.addressAdd li .title{width: 30%; color: #666;}
+.addressAdd li .rightMsg{ display: flex;justify-content: flex-end; align-items: center; font-size: 13px;}
+.addressAdd li .rightMsg input{ display: block; width: 100%; text-align: right;}
+
+
+

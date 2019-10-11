@@ -1,0 +1,94 @@
+@charset "UTF-8";
+/**
+ * \(^o^)/~
+ * @authors Your Name (you@example.org)
+ * @date    2019-10-9 11:19:16
+ * @version $Id$
+ */
+
+.agentMsg{margin: 15px 0; position: relative;}
+.agentMsg textarea{ display: block; padding: 10px;background: #f5f5f5; width: 100%; height: 80px; font-size: 12px;border: none;box-sizing: border-box;}
+.agentMsg .btn{ position: absolute; top: 20px; right: 26px; width: 38px; height: 38px; line-height: 38px;text-align: center; color: #fff; background: #2FA0ED;border-radius: 50%; font-size: 12px;}
+
+.agentMsg .proNav{overflow-x: scroll; margin-top: 15px; width: 100%;}
+.agentMsg .proNav ul{width: 200%;}
+.agentMsg .proNav li { display: flex; flex-direction:column; font-size: 12px; text-align: center; float: left; margin-right: 35px; width: 50px; margin-right: 10px;}
+.agentMsg .proNav li .icon{width: 20px; height: 20px; margin: 0 auto 3px auto;-webkit-filter: grayscale(100%); -moz-filter: grayscale(100%);-ms-filter: grayscale(100%);-o-filter: grayscale(100%); filter: grayscale(100%); filter: gray(100%);
+}
+.agentMsg .proNav li.on .icon{-webkit-filter: grayscale(0); -moz-filter: grayscale(0);-ms-filter: grayscale(0);-o-filter: grayscale(0); filter: grayscale(0); filter: gray(0);}
+
+
+/* 取送件信息详情 */
+.lineMsg{padding: 15px 4%;}
+.qsCotMsg .left{width: 15%;}
+.qsCotMsg .note{ width: 30px; height: 30px; border:1px solid #E1E1E1; font-size: 12px;text-align: center;line-height: 30px;border-radius: 50%;margin: 0 auto; display: block;}
+.qsCotMsg .note.qu{color: #009944;border-color:#009944;}
+.qsCotMsg .note.shou{color: #f01a1c;border-color:#f01a1c;}
+.qsCotMsg .cont{width: 85%;padding: 20px 0;padding-right: 4%;box-sizing: border-box;}
+.qsCotMsg .cont .infor{width: 60%;padding-right: 10px;box-sizing: border-box;}
+.qsCotMsg .cont .phone{ display: flex; justify-content: flex-end; align-items: center;}
+.qsCotMsg .cont .phone p{margin-right: 10px;}
+.dian3{ width: 4px; height: 20px;position: absolute; top: 50%;left:7%;transform: translateY(-50%); display: block;}
+
+.qsLineinfor li{padding: 15px 4%;border-bottom:1px solid #eee;}
+.qsLineinfor li .left{width: 35%; font-size: 13px;}
+.qsLineinfor .right{width: 65%; display: flex;justify-content: flex-end;  align-items:center ;color: #999; font-size: 12px;}
+.qsLineinfor .right input{display: block; width: 80%; text-align: right;}
+.qsLineinfor .right input::-webkit-input-placeholder {color: #999;}
+
+.qusUnderFix{position: fixed; bottom: 0;left: 0;width: 100%;box-sizing: border-box;background: #fff;box-shadow:0 -2px 5px rgba(146,146,146,0.1) ;}
+.qusUnderFix .left{ width: 60%;padding:0 4%;box-sizing: border-box;}
+.qusUnderFix .left .price{font-size: 16px;}
+.qusUnderFix .right{width: 40%;line-height: 45px;height: 45px;background: #2FA0ED; text-align: center;font-size: 15px;color: #fff;}
+
+/* 弹框固定内容 */
+.qjAlertCont{position: fixed; bottom: 0px;left: 0; width: 100%;background: #fff; z-index: 90;}
+
+/* 选择优惠券弹框 */
+.couponShow .infor{height: 160px; overflow-y: auto; }
+.couponShow li{padding:15px 4% 0 4%; display: flex; justify-content: space-between; align-items: center;}
+.couponShow li .setIcon{width: 10%; width: 20px; height: 20px; display: block;}
+
+/* 物品保价弹框 */
+.baojiaShow .edit{padding-bottom: 5px;}
+.baojiaShow .edit::before{content: '￥'; font-size: 12px; margin-right: 5px;}
+.baojiaShow .edit input{ font-size: 16px; width: 60%; display: inline-block;}
+.baojiaShow .edit input::-webkit-input-placeholder {font-size: 14px;}
+.baojiaShow .setIcon{width: 16px; height: 16px; display: block; margin-right: 5px;}
+
+/* 小费弹框 */
+.tippingShow .wpMsgBox .item span:last-child{ width: 100%; margin-right: 0;}
+
+/* 取件时间 */
+.accessShow .setData{max-height: 150px; overflow-y: auto;}
+.accessShow .setData li{padding: 10px 10%;border-bottom: 1px solid #EEEEEE;}
+.accessShow .setData li span{ width: 33.3%;}
+.accessShow .setData li .seltBtn{ display: flex; justify-content: flex-end; align-items: center;}
+.accessShow .setData li .seltBtn img{width: 20px; height: 20px; display: block;} 
+
+/* 费用明细 */
+.moneyMxShow .list li{padding: 10px 0; font-size: 13px;}
+.moneyMxShow .list li em{margin-left: 5px;}
+
+
+/* 代买 */
+.qsLineinfor .liContbox2{border-bottom: none; align-items: flex-start;padding-bottom: 0;}
+.qsLineinfor .liContbox2 .left{ width: 15%;}
+.qsLineinfor .liContbox2 .right{width: 85%; justify-content: space-between;padding-bottom: 15px;}
+.qsLineinfor .liContbox2 .right input{text-align: left;}
+.liContbox2 .smallnav{display: flex; align-items: flex-start; width: 100%; color: #333;}
+.liContbox2 .smallnav span{ line-height: 30px; padding: 0 10px;border: 1px solid #E1E1E1;text-align: center;}
+.liContbox2 .smallnav span.on{background: #e3f1ff; border-color: #2fa0ed;}
+
+
+
+/* 点击弹框 */
+.agreeSel{ width: 80%; margin: 0 auto; display: flex;justify-content: flex-start;align-items: center; color: #999; font-size: 12px;}
+.agreeSel .selt{width: 16px;height: 16px;}
+.agreeSel .selt image{width: 100%;height: 100%; display: block;}
+.xieyiAlert{background: rgba(0,0,0,0.5);position: fixed;top: 0;right: 0;bottom: 0;left: 0; z-index: 999;}
+.xieyiAlert .infor{width: 90%; height: 80%;position: fixed; top: 50%;left:50%;transform: translate(-50%,-50%);background: #fff; box-sizing: border-box;padding: 15px 15px 70px 15px; z-index: 1000;font-size: 14px; color: #555;}
+.xieyiAlert .infor .cont{ line-height: 22px;height: 100%; width: 100%; overflow-y: auto;}
+.xieyiAlert .infor .cont view{padding-bottom: 10px;}
+
+

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>取送件</title>
+		<script src="./js/vue.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" type="text/css" href="css/page.css">
+	</head>
+
+
+<body style="padding-bottom: 50px;">
+	<div id="app">
+		<!-- 标题 -->
+		<div class="T-head line50 center fs16 Tfix-head">
+			<a class="back-next pa" href="javascript:history.go(-1);"><img class="icon" src="images/backIcon.png" ></a>
+			取送件
+		</div>
+		<div class="h50"></div>
+		
+		<div class="">
+			<a class="lineMsg flexRowBetween" href="goodsInfor.html">
+				<div>文件、50-150元、小于5公斤</div>
+				<img class="arrowR" src="images/icon.png" >
+			</a>
+		</div>
+		<div class="f5H10"></div>
+		
+		<div class="pr">
+			<div class="flexRowBetween qsCotMsg">
+				<div class="left"><span class="note qu">取</span></div>
+				<div class="flexRowBetween cont bordB1">
+					<div class="infor">
+						<h1 class="ftn fs14">高新大都荟</h1>
+						<p class="fs12 color9">具体的楼号、楼层和门牌号</p>
+					</div>
+					<div class="phone">
+						<p>15923014120</p>
+						<img class="arrowR" src="images/icon.png" alt="">
+					</div>
+				</div>
+			</div>
+			<img class="dian3" src="images/dian3.png">
+			<div class="flexRowBetween qsCotMsg">
+				<div class="left"><span class="note shou">收</span></div>
+				<div class="flexRowBetween cont">
+					<div class="infor">
+						<h1 class="ftn fs14">高新大都荟</h1>
+						<p class="fs12 color9">具体的楼号、楼层和门牌号</p>
+					</div>
+					<div class="phone">
+						<p>15923014120</p>
+						<img class="arrowR" src="images/icon.png" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="f5H10"></div>
+		
+		<div class="qsLineinfor">
+			<ul>
+				<li class="flexRowBetween">
+					<div class="left">优惠券：</div>
+					<div class="right" @click="couponShow">
+						请选择<img class="arrowR" src="images/icon.png" >
+					</div>
+				</li>
+				<li class="flexRowBetween">
+					<div class="left">备注：</div>
+					<div class="right">
+						<input type="text"  value="" placeholder="物品描述或送件要求" />
+					</div>
+				</li>
+				<li class="flexRowBetween">
+					<div class="left">物品保价：</div>
+					<div class="right"  @click="baojiaShow">
+						选择保价，安心配送<img class="arrowR" src="images/icon.png" >
+					</div>
+				</li>
+				<li class="flexRowBetween">
+					<div class="left">小费：</div>
+					<div class="right"  @click="tippingShow">
+						给小费抢单更快哟<img class="arrowR" src="images/icon.png" >
+					</div>
+				</li>
+				<li class="flexRowBetween">
+					<div class="left">取件时间：</div>
+					<div class="right" @click="accessShow">
+						<span class="fs14 color3">立即取件</span><img class="arrowR" src="images/icon.png" >
+					</div>
+				</li>
+				<li class="flexRowBetween">
+					<div class="left">预计送达时间：</div>
+					<div class="right"><span class="red">取送距离4.8km，预计35分钟送达</span></div>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="qusUnderFix flexRowBetween">
+			<div class="left flex fs12" @click="moneyMxShow">
+				总价&nbsp;<em class="price ftw">20.6</em>
+				<img class="arrowR" src="images/icon.png" >
+			</div>
+			<div class="right">提交订单</div>
+		</div>
+		
+		<!-- 弹框背景 -->
+		<div class="black-bj" v-show="is_show"></div>
+		
+		<!-- 优惠券 -->
+		<div class="qjAlertCont couponShow" v-show="is_couponShow">
+			<div class="q-close" @click="couponShow">取消</div>
+			<h1 class="center line40 bordB1 ftn">优惠券</h1>
+			<div class="infor">
+				<ul>
+					<li v-for="(item,,index) in couponDate" @click="seltCoupon(index)">
+						<span>{{item}}</span>
+						<img class="setIcon" :src="seltCur == index?'images/coupons-icon.png':'images/coupons-icon1.png'" alt="">
+					</li>
+				</ul>
+			</div>
+			<div class="qusUnderFix flexRowBetween">
+				<div class="left flex fs12">
+					总价&nbsp;<em class="price ftw">20.6</em>
+					<img class="arrowR" src="images/icon.png" >
+				</div>
+				<div class="right">提交订单</div>
+			</div>
+		</div>
+	
+		<!-- 物品保价 -->
+		<div class="qjAlertCont baojiaShow" v-show="is_baojiaShow">
+			<div class="q-close" @click="baojiaShow">取消报价</div>
+			<p class="center line40 bordB1">物品保价</p>
+			<div class="pdlr4">
+				<h1 class="pdt10 pdb20">请输入物品实际价值</h1>
+				<div class="edit bordB1">
+					<input type="number" name="" value="" placeholder=""/>
+				</div>
+				<p class="pdtb10 fs12 color6">保价费用：<em class="pucolor">3元</em></p>
+				<div class="flex fs12 color9">
+					<img class="setIcon" v-show="isAgree" src="images/coupons-icon.png" @click="agreeSelt"/>
+					<img class="setIcon" v-show="!isAgree" src="images/coupons-icon1.png" @click="agreeSelt"/>
+					<label>已阅读并同意</label>
+					<a class="pucolor" href="baojia_treaty.html">《保价协议》</a>
+				</div>
+				<div class="submitbtn mgt20" >
+					<a class="btn" href="#">确定</a>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 小费弹框 -->
+		<div class="qjAlertCont tippingShow" v-show="is_tippingShow">
+			<div class="flexRowBetween pdlr4 line40 bordB1">
+				<span class="fs12 color6" @click="tippingShow">取消</span>
+				<span>小费</span>
+				<span class="pucolor fs12">确定</span>
+			</div>
+			<div class="wpMsgBox pdlr4 mgt20">
+				<div class="item">
+					<span v-for="(item,index) in tipDate" :key="index" :class="[seltCurr == index?'on':'']" @click="seltSpecs(index)">{{item}}</span>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 取件时间弹框 -->
+		<div class="qjAlertCont accessShow" style="padding-bottom: 80px;" v-show="is_accessShow">
+			<div class="flexRowBetween pdlr4 line40 bordB1">
+				<span class="fs12 color6" @click="accessShow">取消</span>
+				<span>取件时间</span>
+				<span class="pucolor fs12">确定</span>
+			</div>
+			<div class="setData fs12 color6">
+				<ul>
+					<li class="flexRowBetween" v-for="(item,index) in setData" :key="index" @click="qjSetData(index)">
+						<span>{{item.title}}</span>
+						<span class="center">{{item.thatDay}}</span>
+						<span class="seltBtn">
+							<img class="icon" :src="seltData==index?'images/coupons-icon.png':'images/coupons-icon1.png'" alt="">
+						</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<!-- 费用明细 -->
+		<div class="qjAlertCont moneyMxShow" v-show="is_moneyMxShow" style="padding-bottom:60px;">
+			<div class="flexRowBetween pdlr4 line40 bordB1">
+				<span class="fs12 color6" @click="moneyMxShow">关闭</span>
+				<span>费用明细</span>
+				<span class="flex">
+					<a class="pucolor fs12" href="price_specs.html">价格规格</a>
+					<img class="arrowR" src="images/icon.png" >
+				</span>
+			</div>
+			<div class="pdlr4 list">
+				<ul>
+					<li class="flexRowBetween" v-for="(item,index) in moneyMxDate" :key='index'>
+						<span>{{item.title}}<em class="fs12 color9">{{item.range}}</em></span>
+						<span>{{item.price}}</span>
+					</li>
+				</ul>
+			</div>
+			<div class="qusUnderFix flexRowBetween">
+				<div class="left flex fs12" @click="moneyMxShow">
+					总价&nbsp;<em class="price ftw">20.6</em>
+					<img class="arrowR" src="images/icon.png" >
+				</div>
+				<div class="right">提交订单</div>
+			</div>
+		</div>
+		
+	</div>
+</body>
+
+	
+<script type="text/javascript">
+	var app = new Vue({
+			el: '#app',
+			data:function(){
+				return {
+					mainData: [],
+					is_show:false,
+					is_couponShow:false,
+					isAgree:false,
+					is_baojiaShow:false,
+					is_tippingShow:false,
+					is_accessShow:false,
+					is_moneyMxShow:false,
+					seltCurr:0,
+					seltCur:0,
+					seltData:0,
+					couponDate:['抵扣券5元','满20元抵3元'],
+					tipDate:['不加了','￥5','￥10','￥15','￥20','￥25','其他金额'],
+					setData:[
+						{title:'今天',thatDay:'立即取件'},
+						{title:'明天',thatDay:'23'},
+						{title:'后天',thatDay:'24'}
+					],
+					moneyMxDate:[
+						{title:'基础配送费',price:'￥9'},
+						{title:'距离附加',range:'2.9公里',price:'￥2.5'},
+						{title:'重量附加',range:'6.0公斤',price:'￥6'},
+						{title:'小费',price:'￥5'}
+					]
+				}
+			},
+			onLoad() {
+				const self = this;
+				// self.$Utils.loadAll(['getMainData'], self);
+			},
+		    methods: {
+				seltCoupon(index){
+					const self = this;
+					self.seltCur = index
+				},
+				couponShow(){
+					const self = this;
+					self.is_show = !self.is_show
+					self.is_couponShow = !self.is_couponShow
+				},
+				// 保价
+				baojiaShow(){
+					const self = this;
+					self.is_show = !self.is_show
+					self.is_baojiaShow = !self.is_baojiaShow
+				},
+				// 同意保价
+				agreeSelt(){
+					const self = this;
+					self.isAgree = !self.isAgree
+				},
+				
+				// 小费弹框
+				tippingShow(){
+					const self = this;
+					self.is_show = !self.is_show
+					self.is_tippingShow = !self.is_tippingShow
+				},
+				seltSpecs(index){
+					const self = this;
+					self.seltCurr=index
+				},
+				
+				
+				// 取件时间弹框
+				accessShow(){
+					const self = this;
+					self.is_show = !self.is_show
+					self.is_accessShow = !self.is_accessShow
+				},
+				// 取件时间日期选择
+				qjSetData(index){
+					const self = this;
+					self.seltData = index
+				},
+				// 价格明细
+				moneyMxShow(){
+					const self = this;
+					self.is_show = !self.is_show
+					self.is_moneyMxShow = !self.is_moneyMxShow
+				},
+				getMainData() {
+					const self = this;
+					const postData = {};
+					postData.tokenFuncName = 'getProjectToken';
+					var callback = function(res){
+					    console.log('getMainData', res);
+					    self.mainData.push.apply(self.mainData,res.info.data);		        
+					};
+					self.$apis.orderGet(postData, callback);
+				}
+		    }
+		})
+</script>
+
+</html>

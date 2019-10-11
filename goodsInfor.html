@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>物品信息</title>
+		<script src="./js/vue.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" type="text/css" href="css/page.css">
+	</head>
+
+<body>
+	<div id="app">
+		<!-- 标题 -->
+		<div class="T-head line50 center fs16 Tfix-head">
+			<a class="back-next pa" href="javascript:history.go(-1);"><img class="icon" src="images/backIcon.png" ></a>
+			物品信息
+		</div>
+		<div class="h50"></div>
+		
+		<div class="pdlr4">
+			<div class="wpMsgBox">
+				<div class="title">物品类型</div>
+				<div class="item">
+					<span v-for="(item,index) in typeDate" :key="index" :class="[seltCurr == index?'on':'']" @click="seltSpecs(index)">{{item}}</span>
+				</div>
+			
+				<div class="" style="color: #9999;font-size: 12px;">温馨提示：请勿配送违禁品及3000元以上物品</div>
+				
+				<div class="title">物品价值</div>
+				<div class="item">
+					<span v-for="(item,index) in moneyDate" :key="index" :class="[seltCurrTwo == index?'on':'']" @click="seltSpecsTwo(index)">{{item}}</span>
+				</div>
+				
+				<div class="title">物品价值</div>
+				<div class="center fs18 pucolor">小于5公斤</div>
+				<div class="weightRange">
+					<span class="item">
+						<em class="yuan"></em>
+						<p>小于5公斤</p>
+					</span>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div class="submitbtn" style="margin-top: 100px;">
+			<a class="btn"  href="order_qusong.html">确定(取送件)</a>
+		</div>
+		<div class="submitbtn" style="margin-top: 100px;">
+			<a class="btn"  href="order_sameDay.html">确定(当日达)</a>
+		</div>
+	</div>
+</body>
+
+	
+<script type="text/javascript">
+	var app = new Vue({
+		    el: '#app',
+		    data:function(){
+		        return {
+					is_show:false,
+					mainData: [],
+					seltCurr:0,
+					seltCurrTwo:0,
+					typeDate:['餐饮','文件','生鲜','蛋糕','鲜花','钥匙','数码','服务','其他'],
+					moneyDate:['50元以下','50-150元','150-300元','300-1000元','1000-1500元','1500以上'],
+		        }
+		    },
+		    onLoad() {
+		    	const self = this;
+		    	// self.$Utils.loadAll(['getMainData'], self);
+		    },
+		    methods: {
+				seltSpecs(index){
+					const self = this;
+					self.seltCurr=index
+				},
+				seltSpecsTwo(index){
+					const self = this;
+					self.seltCurrTwo=index
+				},
+				getMainData() {
+					const self = this;
+					const postData = {};
+					postData.tokenFuncName = 'getProjectToken';
+					var callback = function(res){
+					    console.log('getMainData', res);
+					    self.mainData.push.apply(self.mainData,res.info.data);		        
+					};
+					self.$apis.orderGet(postData, callback);
+				}
+		    }
+		});
+	</script>
+	
+<style type="text/css">
+/* 物品信息 */
+.wpMsgBox .title{padding: 20px 0 10px 0; color: #666;}
+.wpMsgBox .item{ display: flex; flex-wrap: wrap;}
+.wpMsgBox .item span{width: 31.3%; margin-right: 3%;text-align: center; border: 1px solid #E1E1E1; line-height: 28px;height: 30px;box-sizing: border-box;margin-bottom: 15px; font-size: 12px;}
+.wpMsgBox .item span:nth-of-type(3n){margin-right: 0;}
+.wpMsgBox .item span.on{border-color: #2FA0ED;color: #2FA0ED;}
+.weightRange{width: 70%; height: 1px;background: #b5b5b5;margin: 30px auto; position: relative;}
+.weightRange .item{position: absolute; top: -12px;left: -26px; display: flex;flex-direction: column;text-align: center; font-size: 12px; color: #999;}
+.weightRange .yuan{width: 24px; height: 24px;border: 1px solid #e1e1e1; border-radius: 50%; display: block;margin: 0 auto 5px auto;background: #FFF;}
+</style>
+
+</html>

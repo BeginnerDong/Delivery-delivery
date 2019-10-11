@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>我的</title>
+		<script src="./js/vue.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/public.css">
+	</head>
+	
+<body>
+
+<div id="app">
+		<div class="T-head line50 center fs16 Tfix-head">
+			<a class="back-next pa" href="javascript:history.go(-1);"><img class="icon" src="images/backIcon.png" ></a>
+			我的
+		</div>
+		<div class="h50"></div>
+		
+		<!-- card -->
+		<div class="VIPser_car">
+			<div class="card pr">
+				<img class="pic" src="images/vip-img.png">
+				<div class="mny">￥899</div>
+			</div>
+			
+		</div>
+		
+		<div class="msg pdlr4 color6">
+			<div class="tit">服务说明</div>
+			<div>1、内容内容内容内容内容内容内容内容内容内容内容内容内容内容；</div>
+			<div>2、内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容；</div>
+			<div>3、内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容；</div>
+		</div>
+		
+		
+		<div class="submitbtn" style="margin-top: 60px;">
+			<button class="btn" type="submit">立即购买</button>
+		</div>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	var app = new Vue({
+		    el: '#app',
+		    data:function(){
+		        return {
+					is_show:false,
+					mainData: []
+		        }
+		    },
+		    onLoad() {
+		    	const self = this;
+		    	// self.$Utils.loadAll(['getMainData'], self);
+		    },
+		    methods: {
+				
+				getMainData() {
+					const self = this;
+					const postData = {};
+					postData.tokenFuncName = 'getProjectToken';
+					var callback = function(res){
+					    console.log('getMainData', res);
+					    self.mainData.push.apply(self.mainData,res.info.data);		        
+					};
+					self.$apis.orderGet(postData, callback);
+				}
+		    }
+		});
+</script>
+
+<style>
+.VIPser_car .card{ width: 251px;height: 162px;display: block;margin:30px auto;}
+.VIPser_car .card .pic{width: 100%; height: 100%; display: block;}
+.VIPser_car .card .mny{ font-size: 20px; color: #edce43; position: absolute; bottom: 10px; right: 20px;}
+.msg div{ padding-bottom: 10px; font-size: 13px; color: #333; line-height: 40rpx;}
+.msg .tit{ font-size: 15px; font-weight: bold;}
+</style>
+<html>
