@@ -115,7 +115,7 @@
 			<h1 class="center line40 bordB1 ftn">优惠券</h1>
 			<div class="infor">
 				<ul>
-					<li v-for="(item,,index) in couponDate" @click="seltCoupon(index)">
+					<li v-for="(item,index) in couponDate" @click="seltCoupon(index)">
 						<span>{{item}}</span>
 						<img class="setIcon" :src="seltCur == index?'images/coupons-icon.png':'images/coupons-icon1.png'" alt="">
 					</li>
@@ -138,8 +138,8 @@
 				<span class="pucolor fs12">确定</span>
 			</div>
 			<div class="wpMsgBox pdlr4 mgt20">
-				<div class="item">
-					<span v-for="(item,index) in tipDate" :key="index" :class="[seltCurr == index?'on':'']" @click="seltSpecs(index)">{{item}}</span>
+				<div class="item flexRowBetween">
+					<span v-for="(item,index) in tipDate" :key="index" :class="seltCurr == index?'on':''" @click="seltSpecs(index)">{{item}}</span>
 				</div>
 			</div>
 		</div>

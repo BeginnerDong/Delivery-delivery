@@ -57,7 +57,12 @@
 .baojiaShow .setIcon{width: 16px; height: 16px; display: block; margin-right: 5px;}
 
 /* 小费弹框 */
+.tippingShow .wpMsgBox{padding-bottom: 30px;}
+.tippingShow .wpMsgBox .item{flex-wrap: wrap;}
+.tippingShow .wpMsgBox .item span{width: 30%; display: block; line-height: 28px;border: 1px solid #eee;text-align: center; margin-bottom: 10px;}
 .tippingShow .wpMsgBox .item span:last-child{ width: 100%; margin-right: 0;}
+.tippingShow .wpMsgBox .item span.on{border-color:#2FA0ED ; color: #2FA0ED;}
+
 
 /* 取件时间 */
 .accessShow .setData{max-height: 150px; overflow-y: auto;}
