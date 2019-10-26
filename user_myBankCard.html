@@ -26,7 +26,7 @@
 		<div class="h50"></div>
 		
 			<div class="pdlr4">
-				<div class="myaddress-lis boxShaow radius10">
+				<div class="myaddress-lis boxShaow radius10" v-for="(item,index) in myBankData">
 					<div class="flex">
 						<img class="bankIcon" src="images/bank_icon1.png" >
 						<div class="cont">
@@ -35,37 +35,16 @@
 						</div>
 					</div>
 					<div class="seltBox">
-						<div class="L">
-							<image class="icon" src="images/coupons-icon.png" alt=""></image>
+						<div class="L" @click="change(index)">
+							<img class="icon" :src="curr==index?'images/coupons-icon.png':'images/coupons-icon1.png'">
 							默认银行卡
 						</div>
-						<div class="R">
+						<div class="R fs12">
 							<a class="child"  href="user_myBankCard_edit.html"><image src="images/address-icon.png" mode=""></image>编辑</a>
 							<div class="child" @click="deltAlert"><image src="images/address-icon1.png" mode=""></image>删除</div>
 						</div>
 					</div>
 				</div>
-				<div class="myaddress-lis boxShaow radius10">
-					<div class="flex">
-						<img class="bankIcon" src="images/bank_icon1.png" >
-						<div class="cont">
-							<div class="adrs">中国银行 <text class="color3 font12">对公</text></div>
-							<div class="name">**** **** **** 2356</div>
-						</div>
-					</div>
-					
-					<div class="seltBox">
-						<div class="L">
-							<image class="icon" src="images/coupons-icon1.png" alt=""></image>
-							默认银行卡
-						</div>
-						<div class="R">
-							<a class="child"  href="user_myBankCard_edit.html"><image src="images/address-icon.png" mode=""></image>编辑</a>
-							<div class="child" @click="deltAlert"><image src="images/address-icon1.png" mode=""></image>删除</div>
-						</div>
-					</div>
-				</div>
-				
 				
 				<div class="submitbtn" style="margin-top: 80px;">
 					<a class="btn"  href="user_myBankCard_add.html">添加银行卡</a>
@@ -94,7 +73,9 @@
 		        return {
 					is_show:false,
 					mainData: [],
-					num:1
+					num:1,
+					myBankData:[{},{},{}],
+					curr:0
 		        }
 		    },
 		    onLoad() {
@@ -102,6 +83,10 @@
 		    	// self.$Utils.loadAll(['getMainData'], self);
 		    },
 		    methods: {
+				change(index){
+					const self = this;	
+					   self.curr = index
+				},
 				deltAlert(){
 					const self = this;
 					self.is_show=!self.is_show;
