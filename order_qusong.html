@@ -120,7 +120,7 @@
 			<h1 class="center line40 bordB1 ftn">优惠券</h1>
 			<div class="infor">
 				<ul>
-					<li v-for="(item,index) in couponDate" @click="seltCoupon(index)">
+					<li v-for="(item,index) in couponDate" :key="index" @click="seltCoupon(index)">
 						<span>{{item}}</span>
 						<img class="setIcon" :src="seltCur == index?'images/coupons-icon.png':'images/coupons-icon1.png'" alt="">
 					</li>

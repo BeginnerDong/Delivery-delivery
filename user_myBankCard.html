@@ -53,10 +53,10 @@
 				<div class="xieyiAlert" v-if="is_show">
 					<div class="infor center" style="padding:40px 30px;height: auto;border-radius: 10px;">
 						<div class="colseBtn"  @click="deltAlert" style="top: 10px;right: 10px;left:auto;">×</div>
-						<div class="tit font16" style="padding-bottom:30px;">确认是否删除这个技能</div>
+						<div class="tit font16" style="padding-bottom:30px;">确认是否删除这张银行卡</div>
 						<div class="btnB flexRowBetween">
-							<div :class="num==1? 'on':''" @click="chage('1')">是</div>
-							<div :class="num==2? 'on':''" @click="chage('2')">否</div>
+							<div>是</div>
+							<div class="on" @click="deltAlert">否</div>
 						</div>
 					</div>
 				</div>
@@ -73,7 +73,6 @@
 		        return {
 					is_show:false,
 					mainData: [],
-					num:1,
 					myBankData:[{},{},{}],
 					curr:0
 		        }
@@ -90,12 +89,6 @@
 				deltAlert(){
 					const self = this;
 					self.is_show=!self.is_show;
-				},
-				chage(num){
-					const self = this;
-					if(num!=self.num){
-						self.num=num
-					}
 				},
 				getMainData() {
 					const self = this;
