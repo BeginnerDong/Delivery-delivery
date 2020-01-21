@@ -1,0 +1,212 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "会跑腿",//设置页面标题文字
+				"onReachBottomDistance":100,
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/address/address",
+			"style": {
+				"navigationBarTitleText": "地址簿",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/goodsInfor/goodsInfor",
+			"style": {
+				"navigationBarTitleText": "物品信息",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/address_add/address_add",
+			"style": {
+				"navigationBarTitleText": "添加地址",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/baojia_treaty/baojia_treaty",
+			"style": {
+				"navigationBarTitleText": "保价协议",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/order_qusong/order_qusong",
+			"style": {
+				"navigationBarTitleText": "取送件",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/order_sameDay/order_sameDay",
+			"style": {
+				"navigationBarTitleText": "当日达",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/order_sameDay_notes/order_sameDay_notes",
+			"style": {
+				"navigationBarTitleText": "下单须知",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/price_specs/price_specs",
+			"style": {
+				"navigationBarTitleText": "价格规格",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/replace_buy/replace_buy",
+			"style": {
+				"navigationBarTitleText": "代买",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/replace_handle/replace_handle",
+			"style": {
+				"navigationBarTitleText": "代办",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "我的",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_coupon/user_coupon",
+			"style": {
+				"navigationBarTitleText": "优惠券",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_infor/user_infor",
+			"style": {
+				"navigationBarTitleText": "基本信息",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_infor_add/user_infor_add",
+			"style": {
+				"navigationBarTitleText": "添加信息",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_infor_edit/user_infor_edit",
+			"style": {
+				"navigationBarTitleText": "编辑信息",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_myBankCard/user_myBankCard",
+			"style": {
+				"navigationBarTitleText": "银行卡管理",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_myBankCard_add/user_myBankCard_add",
+			"style": {
+				"navigationBarTitleText": "添加银行卡",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_myCashOut/user_myCashOut",
+			"style": {
+				"navigationBarTitleText": "提现",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_myMoney/user_myMoney",
+			"style": {
+				"navigationBarTitleText": "我的收益",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_myOrder/user_myOrder",
+			"style": {
+				"navigationBarTitleText": "我的订单",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_myOrderDetail/user_myOrderDetail",
+			"style": {
+				"navigationBarTitleText": "订单详情",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_treaty/user_treaty",
+			"style": {
+				"navigationBarTitleText": "服务协议",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user_VIPservice/user_VIPservice",
+			"style": {
+				"navigationBarTitleText": "会员卡",//设置页面标题文字
+				"onReachBottomDistance":100
+				//"enablePullDownRefresh": true
+			}
+		}
+    ],
+	
+	"globalStyle": {
+		//"navigationStyle":"custom",
+		"navigationBarTextStyle": "white",//导航栏文字蓝色
+		"navigationBarTitleText": "下单",
+		"navigationBarBackgroundColor": "#2fa0ed"
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	}
+	
+}

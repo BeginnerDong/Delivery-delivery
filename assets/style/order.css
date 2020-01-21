@@ -1,0 +1,36 @@
+@charset "UTF-8";
+/**
+ * \(^o^)/~
+ * @authors Your Name (you@example.org)
+ * @date    2019-10-9 11:19:16
+ * @version $Id$
+ */
+
+
+/* 我的订单 */
+.orderList li{background: #fff; border-radius: 8px; margin-top: 15px;}
+.orderList li .infor{width: 100%; display: block;}
+.orderList li .datt{padding: 10px; font-size: 12px;} 
+.orderList li .state{color: #ff9934;}
+.orderList li .msg{display: flex; flex-direction: column;}
+.orderList li .msg .lable{padding: 0 10px; background: #2FA0ED; color: #fff;border-radius: 20px 0 0 20px; position: absolute; top: 15px; right: 0; line-height: 24px; font-size: 13px;}
+.orderList li .msg span{display: flex; align-items: center; margin-top: 10px;font-size: 13px;}
+.orderList li .msg span .dian{ width: 6px; height: 6px;  background: #009944;border-radius: 50%; display: block; margin-right: 18px;}
+.orderList li .msg span .dian.red{background: #f01a1c;}
+.orderList li .msg span .icon{width: 12px; height: 12px; display: block; margin-right: 12px;}
+.orderList li .Rmny{display: flex; justify-content: flex-end;padding: 10px; align-items: center;}
+.orderList li .persIcon{ width: 16px; height: 16px; display: block; margin-right: 10px;}
+.orderList li .phoneIcon{width: 25px; height: 25px; display: block;}
+.orderList li .underBtn{ display: flex; justify-content: flex-end;}
+.orderList li .Bbtn{display: block; padding: 0 10px; line-height: 30px; border:1px solid #E7E7E7; color: #666;text-align: center; margin-left: 15px; border-radius: 5px; font-size: 13px;}
+.orderList .radius8{border-radius: 8px;}
+
+/* 费用明细弹框 */
+.fxmxShow{ width: 80%;box-sizing: border-box;padding: 10px 4% 30px 4%; position: fixed; top: 50%;left: 50%;transform: translate(-50%,-50%);background: #FFF;border-radius: 8px; z-index: 90;}
+.fxmxShow .infor p{margin-top: 10px;}
+
+.xiaofeiShow{width: 80%;box-sizing: border-box;padding:30px; position: fixed; top: 50%;left: 50%;transform: translate(-50%,-50%);background: #FFF;border-radius: 8px; z-index: 90;}
+
+
+
+

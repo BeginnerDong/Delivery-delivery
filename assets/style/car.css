@@ -1,0 +1,27 @@
+	/* 数量加减 */
+	.numBox{ width: 260rpx; display: flex; justify-content: flex-end; position: absolute; right: 0; bottom: 0;}
+	.numBox view{ width: 40rpx; height: 40rpx; border-radius: 8rpx; border:2rpx solid #e7e7e7; color: #999; font-size:32rpx ; text-align: center; line-height: 40rpx; margin: 0 4rpx;}
+	.numBox view.num{ width: 70rpx; color: #333; font-size: 28rpx;}
+	
+	.ind_proList .item{padding: 30rpx 4%;}
+	.tihuoSelt{padding: 30rpx 4% 0 4%;}
+	.tihuoSelt view{padding: 0 20rpx;background: #eee;color: #666;line-height: 50rpx; margin-right: 30rpx;border-radius: 30rpx;font-size: 24rpx;}
+	.tihuoSelt view.on{background: #F3D012;color: #333;}
+	
+	/* 确认订单 */
+	.cfmSetAdrs{padding:30rpx 4%; background: #fff;position:relative;}
+	.cfmSetAdrs .yy-title{width: 20%; font-size: 26rpx;}
+	.cfmSetAdrs .yy-adrs{width: 80%;color: #666; flex-wrap: wrap;}
+	.cfmSetAdrs .yy-adrs .cont{ width: 88%;}
+	.cfmSetAdrs .yy-adrs .arrow{width: 10%;padding: 20rpx 0; display: flex;justify-content: flex-end;}
+	.cfmSetAdrs .yy-adrs .name{ width: 70%; margin-bottom: 10rpx;}
+	
+	.confm_BFix{ width: 100%; padding: 0 4%;box-sizing: border-box; line-height: 100rpx; box-shadow: 0 -3rpx 4rpx rgba(102,102,102,0.1); display: flex; justify-content: flex-end; font-size: 28rpx; align-items: center; position: fixed; bottom: 0; left: 0;background: #fff;}
+	.confm_BFix .price{ font-size: 28rpx; color: #FF3B3B;}
+	.confm_BFix .price::before{content: "￥"; font-weight: normal;}
+	.confm_BFix .btn{ width: 200rpx; height: 70rpx; text-align: center; line-height: 70rpx; color: #222; background: #F3D012; border-radius: 50rpx; margin-left: 20rpx;font-size: 30rpx;}
+	
+
+
+	
+	

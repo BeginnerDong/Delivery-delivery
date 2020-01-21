@@ -1,0 +1,54 @@
+
+/**
+ * \(^o^)/~
+ * @authors Your Name (you@example.org)
+ * @date    2019-10-9 11:19:16
+ * @version $Id$
+ */
+
+
+/* 首页 */
+.T-head-msg{padding: 10px 3%;box-sizing: border-box;}
+.T-head-msg .left,.T-head-msg .right{ width: 20%;}
+.T-head-msg .left img{width:18px; height:20px;  display: block;}
+.T-head-msg .text{ width:60%; text-align: center;}
+.T-head-msg .right{ text-align: right; position: relative; text-align: right; font-size: 12px; color: #666;}
+.T-head-msg .right::after{content: "";width: 12px; height: 7px; display:inline-block; margin-left: 3px;}
+
+.ind_banner{width: 100%;}
+.ind_banner img{width: 100%; display: block;}
+
+
+.takeMsg li{ margin-left: 12%;border-bottom: 1px solid #E1E1E1;padding: 20px 4% 10px 0; box-sizing: border-box;position: relative; display: flex; justify-content: space-between; align-items: center; font-size: 13px;}
+.takeMsg li .dian{width: 6px; height: 6px;border-radius: 50%; position: absolute;left: -8%; bottom: 18px;}
+.takeMsg li input{width: 80%; display: block;}
+.takeMsg li .bookBtn{  color: #2FA0ED;}
+.takeMsg li .arrow{ width: 8px; height: 14px; display: block;}
+.takeMsg li:last-child{border-bottom: 0;}
+
+.agentMsg{margin: 15px 0; position: relative;}
+.agentMsg textarea{ display: block; padding: 10px;background: #f5f5f5; width: 100%; height: 80px; font-size: 12px;border: none;box-sizing: border-box;}
+.agentMsg .btn{ position: absolute; top: 20px; right: 26px; width: 38px; height: 38px; line-height: 38px;text-align: center; color: #fff; background: #2FA0ED;border-radius: 50%; font-size: 12px;}
+.agentMsg .proNav{overflow-x: scroll; margin-top: 15px; width: 100%;}
+.agentMsg .proNav ul{width: 200%;}
+.agentMsg .proNav li { display: flex; flex-direction:column; font-size: 12px; text-align: center; float: left; margin-right: 35px; width: 50px; margin-right: 10px;}
+.agentMsg .proNav li .icon{width: 20px; height: 20px; margin: 0 auto 3px auto;-webkit-filter: grayscale(100%); -moz-filter: grayscale(100%);-ms-filter: grayscale(100%);-o-filter: grayscale(100%); filter: grayscale(100%); filter: gray(100%);
+}
+.agentMsg .proNav li.on .icon{-webkit-filter: grayscale(0); -moz-filter: grayscale(0);-ms-filter: grayscale(0);-o-filter: grayscale(0); filter: grayscale(0); filter: gray(0);}
+
+
+.agentMsg .daibanNav ul{width: 100%; display: flex; flex-wrap:wrap;margin-top: 15px;}
+.agentMsg .daibanNav li{width: 20%; display: flex;flex-direction: column;font-size: 12px; text-align: center;}
+.agentMsg .daibanNav li .icon{width: 20px; height: 20px; margin: 0 auto 3px auto;-webkit-filter: grayscale(100%); -moz-filter: grayscale(100%);-ms-filter: grayscale(100%);-o-filter: grayscale(100%); filter: grayscale(100%); filter: gray(100%);
+}
+.agentMsg .daibanNav li.on .icon{-webkit-filter: grayscale(0); -moz-filter: grayscale(0);-ms-filter: grayscale(0);-o-filter: grayscale(0); filter: grayscale(0); filter: gray(0);}
+
+
+.persoList li{display: flex; justify-content: space-around; align-items: center; border-bottom: 1px solid #eee;padding: 10px 0;}
+.persoList li>div{width: 50%;}
+.persoList li .left{ display: flex; align-items: center;}
+.persoList li .left img{width: 40px; height:40px; border-radius: 50%; display: block; margin-right: 10px;}
+.persoList li .right{text-align: right; font-size: 26rpx; color: #666;}
+.persoList li .right .mm{ color: #2FA0ED; margin-left: 2px;}
+/* 首页end */
+
