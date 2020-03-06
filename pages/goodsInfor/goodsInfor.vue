@@ -203,14 +203,15 @@
 			submit(){
 				const self = this;
 				console.log(213)
-				if(!self.info.weight){
-					self.$Utils.showToast('请选择重量', 'none');
-					return
-				};
 				if(JSON.stringify(self.info)=='{}'){
 					self.$Utils.showToast('无物品类型', 'none');
 					return
 				};
+				if(!self.info.weight){
+					self.$Utils.showToast('请选择重量', 'none');
+					return
+				};
+				
 				uni.setStorageSync(self.name, self.info);
 				if(self.name=='goodsInfo'){
 					self.Router.navigateTo({route:{path:'/pages/order_qusong/order_qusong'}})
