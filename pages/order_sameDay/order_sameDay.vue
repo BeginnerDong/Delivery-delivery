@@ -57,7 +57,7 @@
 					<div class="left">愿意承担费用：</div>
 					<div class="right">
 						<input type="number" style="color: #000000;" placeholder-style="color:#999"  @blur="countPrice()" v-model="submitData.main_price"  :placeholder="'请输入支付金额(最低'+sdGoodsInfo.price+'元起)'">
-						<img src="../../static/images/dangrida-icon.png" style="width:18px ; height: 18px; display: block; margin-left:5px;">
+						<img @click="Router.navigateTo({route:{path:'/pages/order_sameDay_notes/order_sameDay_notes?type=price'}})" src="../../static/images/dangrida-icon.png" style="width:18px ; height: 18px; display: block; margin-left:5px;">
 					</div>
 				</li>
 				<li class="flexRowBetween">
@@ -89,7 +89,7 @@
 			</ul>
 		</div>
 		<div><a class="red fs12 mglr4 line40"  
-		@click="Router.navigateTo({route:{path:'/pages/order_sameDay_notes/order_sameDay_notes'}})">《下单须知》</a></div>
+		@click="Router.navigateTo({route:{path:'/pages/order_sameDay_notes/order_sameDay_notes?type=order'}})">《下单须知》</a></div>
 		
 		<div class="qusUnderFix flexRowBetween">
 			<div class="left flex fs12" @click="moneyMxShow">
@@ -135,8 +135,8 @@
 			<div class="wpMsgBox pdlr4 mgt20">
 				<div class="item flexRowBetween">
 					<span v-for="(item,index) in tipDate" :key="index" :class="seltCurr == index?'on':''" 
-					@click="seltSpecs(index)">{{item}}</span>
-					<span><input placeholder="其他金额" v-model="tip" @focus="tipInput()"/></span>
+					@click="seltSpecs(index)">{{item.name}}</span>
+					<span><input style="height: 28px;" placeholder="其他金额" v-model="tip" @focus="tipInput()"/></span>
 				</div>
 			</div>
 		</div>
@@ -186,7 +186,8 @@
 				seltCurr:-1,
 				seltCur:0,
 				seltData:0,
-				tipDate:['2元','10元','15元','20元','25元'],
+				tipDate:[{name:'不加了',value:0},{name:'2元',value:2},{name:'5元',value:5},
+				{name:'10元',value:10},{name:'15元',value:15},{name:'20元',value:20}],
 				moneyMxDate:[
 					
 				],
@@ -298,10 +299,16 @@
 				const self = this;
 				var nowTime = Date.parse(new Date());
 				self.totalPrice = 0;
-				
+				self.submitData.gratuity=0;
+				self.submitData.insured_price=0;
 				self.submitData.rider_income=0;
 				self.submitData.platform_income=0;
 				self.moneyMxDate = [];
+				if(parseFloat(self.submitData.main_price)<parseFloat(self.sdGoodsInfo.price)){
+					self.submitData.main_price = '';
+					self.$Utils.showToast('支付价格必须大于或等于指导价格', 'none');
+					return;
+				};
 				if(parseFloat(self.submitData.main_price)>0){
 					self.totalPrice = (parseFloat(self.totalPrice) +  parseFloat(self.submitData.main_price)).toFixed(2);
 					self.moneyMxDate.push({title:'愿意承担费用',price:'￥'+self.submitData.main_price})
@@ -486,17 +493,23 @@
 				const self = this;
 				self.isAgree = !self.isAgree
 			},
+			tippingShow(){
+				const self = this;
+				
+				self.is_show = !self.is_show
+				self.is_tippingShow = !self.is_tippingShow
+				if(self.seltCurr==-1){
+					self.seltCurr=0;
+					self.tip = self.tipDate[0].value;
+				}
+				
+			},
+			
 			seltSpecs(index){
 				const self = this;
 				self.seltCurr=index;
-				self.tip = parseInt(self.tipDate[self.seltCurr]);
+				self.tip =self.tipDate[self.seltCurr].value;
 				console.log('self.tip',self.tip)
-			},
-			// 小费弹框
-			tippingShow(){
-				const self = this;
-				self.is_show = !self.is_show
-				self.is_tippingShow = !self.is_tippingShow
 			},
 			
 			agreenMny(){

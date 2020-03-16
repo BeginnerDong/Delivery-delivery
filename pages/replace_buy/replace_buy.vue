@@ -86,11 +86,22 @@
 					<!-- <div class="right" @click="accessShow">
 						<span class="fs14 color3">立即购买</span><img class="arrowR" src="../../static/images/icon.png" >
 					</div> -->
-					<hTimePicker sTime="0" cTime="24" interval="15" @changeTime="changeTime">
-					  <view slot="pCon" class="changeTime">
-					    {{submitData.start_time}}
-					  </view>
-					</hTimePicker>
+					
+					<view class="flex">
+						<hTimePicker sTime="0" cTime="24" interval="15" @changeTime="changeTime">
+						  <view slot="pCon" class="changeTime">
+						    {{submitData.start_time}}
+						  </view>
+						</hTimePicker>
+						<img class="arrowR" src="../../static/images/icon.png" >
+					</view>
+				</li>
+				<li class="flexRowBetween">
+					<div class="left">预计送达时间：</div>
+					<div class="right">
+						<span class="red" v-if="distance>0">取送距离{{distance}}km，预计{{time}}分钟送达</span>
+						<span class="red" v-else>无法估算</span>
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -172,8 +183,8 @@
 			<div class="wpMsgBox pdlr4 mgt20">
 				<div class="item flexRowBetween">
 					<span v-for="(item,index) in tipDate" :key="index" :class="seltCurr == index?'on':''" 
-					@click="seltSpecs(index)">{{item}}</span>
-					<span><input placeholder="其他金额" v-model="tip" @focus="tipInput()"/></span>
+					@click="seltSpecs(index)">{{item.name}}</span>
+					<span><input style="height: 28px;" placeholder="其他金额" v-model="tip" @focus="tipInput()"/></span>
 				</div>
 			</div>
 		</div>
@@ -236,8 +247,9 @@
 				seltCur:0,
 				is_couponShow:false,
 				is_tippingShow:false,
-				tipDate:['2元','10元','15元','20元','25元'],
-				seltCurr:0,
+				tipDate:[{name:'不加了',value:0},{name:'2元',value:2},{name:'5元',value:5},
+				{name:'10元',value:10},{name:'15元',value:15},{name:'20元',value:20}],
+				seltCurr:-1,
 				is_moneyMxShow:false,
 				moneyMxDate:[
 					
@@ -285,7 +297,7 @@
 				Utils:this.$Utils,
 				chooseCoupon:[],
 				couponIndex:-1,
-				
+				time:''
 			}
 		},
 
@@ -473,6 +485,7 @@
 					const callback = (res) => {
 						if(res.solely_code==100000){
 							self.distance = parseFloat(res.info.distance/1000).toFixed(2);
+							self.time = parseInt(self.distance*uni.getStorageSync('user_info').thirdApp.custom_rule.time)+parseInt(uni.getStorageSync('user_info').thirdApp.custom_rule.basic_time);
 							self.submitData.total_distance = self.distance;
 							console.log('self.distance',self.distance)
 						}else{
@@ -916,7 +929,8 @@
 						
 			clickPro(index){
 				const self = this;
-				self.clickCur = index
+				self.clickCur = index;
+				self.countPrice()
 			},
 			// 起始时间弹框
 			accessShow(){
@@ -944,14 +958,20 @@
 			// 小费弹框
 			tippingShow(){
 				const self = this;
+				
 				self.is_show = !self.is_show
 				self.is_tippingShow = !self.is_tippingShow
+				if(self.seltCurr==-1){
+					self.seltCurr=0;
+					self.tip = self.tipDate[0].value;
+				}
+				
 			},
 			
 			seltSpecs(index){
 				const self = this;
 				self.seltCurr=index;
-				self.tip = parseInt(self.tipDate[self.seltCurr]);
+				self.tip =self.tipDate[self.seltCurr].value;
 				console.log('self.tip',self.tip)
 			},
 			

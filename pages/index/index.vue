@@ -9,8 +9,14 @@
 			<div class="flex T-head-msg">
 				<a class="left" @click="Router.navigateTo({route:{path:'/pages/user/user'}})"><img  src="../../static/images/home-icon1.png" ></a>
 				<div class="text">同城取送1小时送达</div>
-				<div class="right" style="display: flex;align-items: center;justify-content: center;">
-				{{cityData.title?cityData.title:'未开通'}}</div>
+				<div class="right" style="display: flex;align-items: center;justify-content:flex-end;">
+				<!-- {{cityData.title?cityData.title:'未开通'}} -->
+				
+				<picker mode="selector" :range="allCityData" range-key="title" @change="changeCity">
+					<view>{{allCityData[cityIndex]&&allCityData[cityIndex].title?allCityData[cityIndex].title:'未开通'}}</view>
+				</picker>
+				<div><img class="arrow" style="width: 20rpx;height:14rpx;margin-left: 10rpx;" src="../../static/images/home-icon2.png" alt=""></div>
+				</div>
 			</div>
 			
 			<!-- banner -->
@@ -54,7 +60,7 @@
 						<textarea style="width: 80%;" rows="" v-model="buyText" cols="4" placeholder="请输入你想买的商品"></textarea>
 					</div>
 					<a class="btn" style="z-index:999" 
-					@click="Router.navigateTo({route:{path:'/pages/replace_buy/replace_buy?index='+clickCur+'&text='+buyText}})">
+					@click="goBuy()">
 						下单
 					</a>
 					<div class="proNav">
@@ -72,7 +78,7 @@
 						<textarea style="width: 80%;" rows="" v-model="handleText" cols="4" placeholder="需求详细说明"></textarea>
 					</div>
 					<a class="btn" style="z-index:999" 
-					@click="Router.navigateTo({route:{path:'/pages/replace_handle/replace_handle?index='+clickCurTwo+'&text='+handleText}})">下单</a>
+					@click="goHandle()">下单</a>
 					<div class="daibanNav">
 						<ul>
 							<li :class="clickCurTwo==index?'on':''" v-for="(item,index) in handleData"  :key="index" @click="clickProTwo(index)">
@@ -131,12 +137,12 @@
 				Router:this.$Router,
 				is_show:false,
 				mainData: [],
-				clickCur:0,
+				clickCur:-1,
 				buyData:[],
 				handleData:[],
 				buyText:'',
 				handleText:'',
-				clickCurTwo:0,
+				clickCurTwo:-1,
 				current:1,
 				persoList:[{},{},{},{}],
 				fromAddress:{},
@@ -147,7 +153,9 @@
 				sdGoodsInfo:{},
 				cityData:{},
 				riderData:[],
-				sliderData:{}
+				sliderData:{},
+				allCityData:[],
+				cityIndex:-1
 			}
 		},
 
@@ -157,17 +165,19 @@
 			uni.removeStorageSync('goAddress');
 			uni.removeStorageSync('sdFromAddress');
 			uni.removeStorageSync('sdGoAddress');
+			uni.removeStorageSync('buyAddress');
+			uni.removeStorageSync('handleAddress');
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			if(options.user_no){
 				const callback = (res) => {
-					self.$Utils.loadAll(['getLocation','getSliderData'], self);
+					self.$Utils.loadAll(['getSliderData','getAllCityData'], self);
 				};
 				self.$Token.getProjectToken(callback, {
 					refreshToken: true,parent_no:options.user_no
 				})
 			}else{
 				const callback = (res) => {
-					self.$Utils.loadAll(['getLocation','getSliderData'], self);
+					self.$Utils.loadAll(['getSliderData','getAllCityData'], self);
 				};
 				self.$Token.getProjectToken(callback, {
 					refreshToken: true
@@ -220,6 +230,49 @@
 		
 
 		methods: {
+			
+			changeCity(e){
+				const self = this;
+				console.log(e)
+				self.cityIndex = e.detail.value;
+				uni.setStorageSync('city_id', self.allCityData[e.detail.value].id);
+				self.getBuyData();
+				self.getHandleData();
+			},
+			
+			getAllCityData() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					thirdapp_id: 2,
+					type:7
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.allCityData = res.info.data;
+						self.getLocation()
+					} 
+				};
+				self.$apis.labelGet(postData, callback);
+			},
+			
+			goBuy(){
+				const self = this;
+				if(self.clickCur<0){
+					self.$Utils.showToast('未选择代买商品类型', 'none');
+				}else{
+					self.Router.navigateTo({route:{path:'/pages/replace_buy/replace_buy?index='+self.clickCur+'&text='+self.buyText}})
+				}
+			},
+			
+			goHandle(){
+				const self = this;
+				if(self.clickCurTwo<0){
+					self.$Utils.showToast('未选择代办业务类型', 'none');
+				}else{
+					self.Router.navigateTo({route:{path:'/pages/replace_handle/replace_handle?index='+self.clickCurTwo+'&text='+self.handleText}})
+				}
+			},
 			
 			getSliderData() {
 				const self = this;
@@ -300,6 +353,7 @@
 			
 			getLocation() {
 				const self = this;
+				var hasThisCity = false;
 				const callback = (res) => {
 					if (res) {
 						console.log('res', res)
@@ -310,36 +364,29 @@
 						self.city = res.address_component.city
 						//self.city = '泰安市'
 						self.lng = res.location.lng;
-						self.lat = res.location.lat
-						self.getCityData();
-						self.getRiderData(true)
+						self.lat = res.location.lat;
+						self.getRiderData();
+						for (var i = 0; i < self.allCityData.length; i++) {
+							if(self.allCityData[i].title==self.city){
+								hasThisCity = true;
+								self.cityIndex = i;
+								uni.setStorageSync('city_id', self.allCityData[i].id);
+							}
+						}
+						if(hasThisCity){
+							self.$Utils.finishFunc('getAllCityData');
+							self.getBuyData();
+							self.getHandleData();
+						}else{
+							self.getDefaultCity()
+						}
 					};
 				};
 				self.$Utils.getLocation('reverseGeocoder', callback);
 			
 			},
 			
-			getCityData() {
-				const self = this;
-				const postData = {};
-				postData.searchItem = {
-					thirdapp_id: 2,
-					title: self.city
-				};
-				const callback = (res) => {
-					if (res.info.data.length > 0) {
-						self.cityData = res.info.data[0];
-						uni.setStorageSync('city_id', self.cityData.id);
-						self.getBuyData();
-						self.getHandleData();
-						self.$Utils.finishFunc('getLocation');
-					} else {
-						self.getDefaultCity()
-					}
 			
-				};
-				self.$apis.labelGet(postData, callback);
-			},
 			
 			getDefaultCity() {
 				const self = this;
@@ -349,14 +396,18 @@
 					is_default: 1
 				};
 				const callback = (res) => {
+					self.$Utils.finishFunc('getAllCityData');
 					if (res.info.data.length > 0) {
 						self.cityData = res.info.data[0];
-						uni.setStorageSync('city_id', self.cityData.id);
+						for (var i = 0; i < self.allCityData.length; i++) {
+							if(self.allCityData[i].id==self.cityData.id){
+								self.cityIndex = i;
+								uni.setStorageSync('city_id', self.allCityData[i].id);
+							}
+						}
 						self.getBuyData();
 						self.getHandleData();
-						self.$Utils.finishFunc('getLocation');
 					} else {
-						self.getDefaultCity()
 						uni.showModal({
 							title: '提示',
 							content: '当前城市未开通',
@@ -369,7 +420,7 @@
 							}
 						});
 					}
-			
+					
 				};
 				self.$apis.labelGet(postData, callback);
 			},
@@ -397,7 +448,7 @@
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
-						self.buyData.push.apply(self.buyData, res.info.data);
+						self.buyData = res.info.data;
 					}
 					console.log('self.buyData', self.buyData)
 					self.$Utils.finishFunc('getBuyData');
@@ -428,7 +479,7 @@
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
-						self.handleData.push.apply(self.handleData, res.info.data);
+						self.handleData = res.info.data
 					}
 					console.log('self.handleData', self.handleData)
 					self.$Utils.finishFunc('getHandleData');

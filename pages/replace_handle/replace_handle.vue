@@ -21,31 +21,37 @@
 		<div class="bordB1"></div>
 		<div class="qsLineinfor">
 			<ul>
-				<li class="flexRowBetween" style="border-bottom: none;">
-					<div class="left" style="width: 15%;">地址：</div>
-					<div class="right" style="width: 85%;" :style="submitData.start_sit!=''?'color:#000000':''" @click="Router.navigateTo({route:{path:'/pages/address/address?name=handle'}})">
-						{{submitData.start_site!=''?submitData.start_site:'请选择业务办理地址'}}<img class="arrowR" src="../../static/images/icon.png" >
+				<li class="flexRowBetween liContbox2">
+					<div class="left">地址：</div>
+					<div class="right" style="padding-bottom:0;" @click="Router.navigateTo({route:{path:'/pages/address/address?name=handle'}})">
+						<input type="text" style="color: #000000;" v-model="submitData.start_site" name="" disabled="true" value="" placeholder="请选择业务办理地址" />
+						<img class="arrowR" src="../../static/images/icon.png" >
 					</div>
 				</li>
-				<li class="flexRowBetween"  v-if="submitData.start_name!=''&&submitData.start_phone!=''">
-					<div class="left"  style="width: 15%;color: #999;font-size: 13px;">
+				<li class="flexRowBetween liContbox2" style="paddng: 0 4%;" v-if="submitData.start_name!=''&&submitData.start_phone!=''">
+					<div class="left" style="color: #999;font-size: 13px;">
 						<input type="text" style="color: #000000;" v-model="submitData.start_name"  disabled="true" value="" />
 					</div>
-					<div class=""  style="width: 85%;font-size: 13px;color: #999">
+					<div class="right" style="font-size: 13px;">
 						<input type="text" style="color: #000000;" v-model="submitData.start_phone"  disabled="true" value="" />
 					</div>
 				</li>
+				
 				<div class="f5H10"></div>
 				<li class="flexRowBetween">
 					<div class="left">起始时间：</div>
 					<!-- <div class="right" @click="accessShow">
 						<span class="fs14 color3">立即开始</span><img class="arrowR" src="../../static/images/icon.png" >
 					</div> -->
-					<hTimePicker sTime="0" cTime="24" interval="15" @changeTime="changeTime">
-					  <view slot="pCon" class="changeTime">
-					    {{submitData.start_time}}
-					  </view>
-					</hTimePicker>
+					
+					<view class="flex">
+						<hTimePicker sTime="0" cTime="24" interval="15" @changeTime="changeTime">
+						  <view slot="pCon" class="changeTime">
+						    {{submitData.start_time}}
+						  </view>
+						</hTimePicker>
+						<img class="arrowR" src="../../static/images/icon.png" >
+					</view>
 				</li>
 				<li class="flexRowBetween">
 					<div class="left">预约时长：</div>
@@ -137,8 +143,8 @@
 			<div class="wpMsgBox pdlr4 mgt20">
 				<div class="item flexRowBetween">
 					<span v-for="(item,index) in tipDate" :key="index" :class="seltCurr == index?'on':''" 
-					@click="seltSpecs(index)">{{item}}</span>
-					<span><input placeholder="其他金额" v-model="tip" @focus="tipInput()"/></span>
+					@click="seltSpecs(index)">{{item.name}}</span>
+					<span><input style="height: 28px;" placeholder="其他金额" v-model="tip" @focus="tipInput()"/></span>
 				</div>
 			</div>
 		</div>
@@ -193,8 +199,9 @@
 				is_couponShow:false,
 				
 				is_tippingShow:false,
-				tipDate:['2元','10元','15元','20元','25元'],
-				seltCurr:0,
+				tipDate:[{name:'不加了',value:0},{name:'2元',value:2},{name:'5元',value:5},
+				{name:'10元',value:10},{name:'15元',value:15},{name:'20元',value:20}],
+				seltCurr:-1,
 				is_moneyMxShow:false,
 				moneyMxDate:[
 					
@@ -685,6 +692,12 @@
 				const self = this;
 				self.clickCurTwo = index
 			},
+			
+			clickPro(index){
+				const self = this;
+				self.clickCur = index;
+				self.countPrice()
+			},
 			// 起始时间弹框
 			accessShow(){
 				const self = this;
@@ -711,14 +724,20 @@
 			// 小费弹框
 			tippingShow(){
 				const self = this;
+				
 				self.is_show = !self.is_show
 				self.is_tippingShow = !self.is_tippingShow
+				if(self.seltCurr==-1){
+					self.seltCurr=0;
+					self.tip = self.tipDate[0].value;
+				}
+				
 			},
 			
 			seltSpecs(index){
 				const self = this;
 				self.seltCurr=index;
-				self.tip = parseInt(self.tipDate[self.seltCurr]);
+				self.tip =self.tipDate[self.seltCurr].value;
 				console.log('self.tip',self.tip)
 			},
 			

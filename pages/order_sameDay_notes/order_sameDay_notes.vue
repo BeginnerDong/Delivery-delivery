@@ -21,7 +21,12 @@
 
 		onLoad(options) {
 			const self = this;
-			self.id = options.id;
+			self.type = options.type;
+			if(self.type=='price'){
+				uni.setNavigationBarTitle({
+					title:'详情'
+				})
+			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.$Utils.loadAll(['getMainData'], self);
 		},
@@ -45,6 +50,9 @@
 						key: 'id',
 						condition: 'in',
 					},
+				};
+				if(self.type=='price'){
+					postData.getBefore.caseData.searchItem.title[1][0] = '当日达费用'
 				};
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
