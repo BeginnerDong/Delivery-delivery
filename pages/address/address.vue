@@ -2,13 +2,13 @@
 <template>
 	<div>
 		<div class="addressLis">
-			<ul>
+			<ul style="padding-bottom: 200rpx;">
 				<li v-for="(item,index) in mainData" :key="index">
 					<h1 class="name flexRowBetween"  @click="choose(index)">{{item.name}} <em class="phone">{{item.phone}}</em></h1>
 					<p class="adrs"  @click="choose(index)">{{item.city+item.detail}}</p>
 					<div class="flexRowBetween">
 						<div class="left">
-							<img class="xing" :src="item.xingUrl">
+							<img class="xing" :src="item.star==1?'../../static/images/address-icon2.png':''">
 						</div>
 						<div class="right">
 							<div class="tt" :data-id="item.id" 
@@ -26,8 +26,8 @@
 			</ul>
 		</div>
 		
-		<div class="submitbtn" style="margin-top: 80px;">
-			<a class="btn"   @click="Router.redirectTo({route:{path:'/pages/address_add/address_add?name='+name}})">添加地址</a>
+		<div class="submitbtn" style="margin-top: 80px;position: fixed;">
+			<a class="btn" style="position: fixed;margin-left: 10%;bottom: 50rpx;"   @click="Router.redirectTo({route:{path:'/pages/address_add/address_add?name='+name}})">添加地址</a>
 		</div>
 	</div>
 
@@ -91,6 +91,9 @@
 				const postData = {};
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.tokenFuncName = 'getProjectToken';
+				postData.order = {
+					star:'desc'
+				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);

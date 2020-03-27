@@ -9,7 +9,7 @@
 		<div class="f5H10"></div>
 		
 		<div class="pr">
-			<div class="flexRowBetween qsCotMsg"  @click="Router.navigateTo({route:{path:'/pages/address_add/address_add?name=sdFrom'}})">
+			<div class="flexRowBetween qsCotMsg"  @click="Router.navigateTo({route:{path:'/pages/address/address?name=sdFrom'}})">
 				<div class="left"><span class="note qu">取</span></div>
 				<div class="flexRowBetween cont bordB1" v-if="sdFromAddress.city">
 					<div class="infor">
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<img class="dian3" src="../../static/images/dian3.png">
-			<div class="flexRowBetween qsCotMsg"  @click="Router.navigateTo({route:{path:'/pages/address_add/address_add?name=sdGo'}})">
+			<div class="flexRowBetween qsCotMsg"  @click="Router.navigateTo({route:{path:'/pages/address/address?name=sdGo'}})">
 				<div class="left"><span class="note shou">收</span></div>
 				<div class="flexRowBetween cont" v-if="sdGoAddress.city">
 					<div class="infor">

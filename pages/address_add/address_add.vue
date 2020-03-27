@@ -33,6 +33,12 @@
 						<input type="text" placeholder="如楼号、门牌号"   v-model="submitData.detail">
 					</div>
 				</li>
+				<li >
+					<div class="title">设为星标地址</div>
+					<div class="rightMsg">
+						<switch @change="choose" :checked="submitData.star==1?true:false" color="#2FA0ED"></switch>
+					</div>
+				</li>	
 			</ul>
 		</div>
 		
@@ -70,6 +76,7 @@
 					phone:'',
 					longitude:'',
 					latitude:'',
+					star:''
 				},
 				
 				mulLinkageTwoPicker: cityData,
@@ -102,7 +109,15 @@
 		
 		methods: {
 			
-			
+			choose(e) {
+				const self = this;
+				if(e.target.value){
+					self.submitData.star = 1
+				}else{
+					self.submitData.star = 0
+				}
+				console.log('switch2 发生 change 事件，携带值为', e.target.value)
+			},
 			
 			chooseAddress(e) {
 				const self = this;
@@ -231,15 +246,7 @@
 			
 			
 			
-			choose(e) {
-				const self = this;
-				if(e.target.value){
-					self.submitData.isdefault = 1
-				}else{
-					self.submitData.isdefault = 0
-				}
-				console.log('switch2 发生 change 事件，携带值为', e.target.value)
-			},
+			
 
 			getMainData(id) {
 				const self = this;
@@ -250,11 +257,13 @@
 
 				const callback = (res) => {
 					console.log(res);
-					
+					self.submitData.longitude = res.info.data[0].longitude;
+					self.submitData.latitude  = res.info.data[0].latitude;
 					self.submitData.name = res.info.data[0].name;
 					self.submitData.detail = res.info.data[0].detail;
-					
+					self.submitData.star = res.info.data[0].star;
 					self.submitData.phone = res.info.data[0].phone;
+					self.submitData.city = res.info.data[0].city;
 					self.$Utils.finishFunc('getMainData');
 				};
 				self.$apis.addressGet(postData, callback);

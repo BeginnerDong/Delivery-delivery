@@ -9,7 +9,52 @@ export default {
 	
 
 	realPay(param, callback) {
-		
+		// #ifdef  APP-PLUS
+			if(param.package){
+				var str=param.package
+				var arr=str.split("=")[1]
+				//胜利ar as1	=arr.toUpperCase()
+				//console.log(as1)
+				var obj={
+					appid:param.appId,      //id 应用id
+					partnerid:'1573719401',              //商户号 
+					prepayid:arr,                         //预支付
+					package:'Sign=WXPay',
+					noncestr:param.nonceStr,
+					timestamp:param.timeStamp,   //时间戳
+					sign:param.paySign.substring(0,30)
+				}
+				var orderInfo = JSON.stringify(obj);
+			}else{
+				var orderInfo = param
+			}
+			
+			uni.requestPayment({
+				provider: !param.package?'alipay':'wxpay',
+				orderInfo:orderInfo, //微信、支付宝订单数据
+				success: function(res) {
+					console.log(res);
+					wx.showToast({
+						title: '支付成功',
+						icon: 'none',
+						duration: 1000,
+						mask: true
+					});
+				
+					callback && callback(1);
+				},
+				fail: function(res) {
+					console.log(res);
+					wx.showToast({
+						title: '支付失败',
+						icon: 'none',
+						duration: 1000,
+						mask: true
+					});
+					callback && callback(0);
+				}
+			});
+		// #endif
 		uni.requestPayment({
 			provider: 'wxpay',
 			'timeStamp': param.timeStamp,

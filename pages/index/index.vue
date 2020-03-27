@@ -39,12 +39,12 @@
 							<i class="dian" style="background: #009944;"></i>
 							<input type="text" v-model="fromAddress.city&&fromAddress.detail?fromAddress.city+fromAddress.detail:fromAddress.city" disabled="true" placeholder="从哪里发出">
 							<a class="bookBtn" 
-							@click="Router.navigateTo({route:{path:'/pages/address_add/address_add?name=from'}})">地址薄</a>
+							@click="Router.navigateTo({route:{path:'/pages/address/address?name=from'}})">地址薄</a>
 						</li>
 						<li>
 							<i class="dian" style="background: #f01a1c;"></i>
 							<input type="text" v-model="goAddress.city&&goAddress.detail?goAddress.city+goAddress.detail:goAddress.city" disabled="true" placeholder="送到哪里去">
-							<a class="bookBtn" @click="Router.navigateTo({route:{path:'/pages/address_add/address_add?name=go'}})">地址薄</a>
+							<a class="bookBtn" @click="Router.navigateTo({route:{path:'/pages/address/address?name=go'}})">地址薄</a>
 						</li>
 						<li @click="Router.navigateTo({route:{path:'/pages/goodsInfor/goodsInfor?name=goodsInfo'}})">
 							<div class="flexRowBetween"  style="width: 100%;">
@@ -94,12 +94,12 @@
 						<li>
 							<i class="dian" style="background: #009944;"></i>
 							<input type="text" v-model="sdFromAddress.city&&sdFromAddress.detail?sdFromAddress.city+sdFromAddress.detail:sdFromAddress.city" disabled="true" placeholder="从哪里发出">
-							<a class="bookBtn" @click="Router.navigateTo({route:{path:'/pages/address_add/address_add?name=sdFrom'}})">地址薄</a>
+							<a class="bookBtn" @click="Router.navigateTo({route:{path:'/pages/address/address?name=sdFrom'}})">地址薄</a>
 						</li>
 						<li>
 							<i class="dian" style="background: #f01a1c;"></i>
 							<input type="text" v-model="sdGoAddress.city&&sdGoAddress.detail?sdGoAddress.city+sdGoAddress.detail:sdGoAddress.city" disabled="true" placeholder="送到哪里去">
-							<a class="bookBtn" @click="Router.navigateTo({route:{path:'/pages/address_add/address_add?name=sdGo'}})">地址薄</a>
+							<a class="bookBtn" @click="Router.navigateTo({route:{path:'/pages/address/address?name=sdGo'}})">地址薄</a>
 						</li>
 						<li @click="Router.navigateTo({route:{path:'/pages/goodsInfor/goodsInfor?name=sdGoodsInfo'}})">
 							<div class="flexRowBetween"  style="width: 100%;">
