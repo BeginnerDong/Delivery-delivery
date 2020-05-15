@@ -288,7 +288,7 @@
 				};
 				const callback = (res) => {
 					if(res.solely_code==100000){
-						//self.distance = parseFloat(res.info.distance/1000).toFixed(2);
+						self.distance = parseFloat(res.info.distance/1000).toFixed(2);
 						self.submitData.total_distance = self.distance;
 					}
 				};
