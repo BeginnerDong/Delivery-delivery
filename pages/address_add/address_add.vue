@@ -76,7 +76,7 @@
 					phone:'',
 					longitude:'',
 					latitude:'',
-					star:''
+					star:0
 				},
 				
 				mulLinkageTwoPicker: cityData,
@@ -334,7 +334,9 @@
 				const self = this;
 				
 				var phone = self.submitData.phone;
-				const pass = self.$Utils.checkComplete(self.submitData);
+				var newObject = self.$Utils.cloneForm(self.submitData);
+				delete newObject.star;
+				const pass = self.$Utils.checkComplete(newObject);
 
 				console.log('self.data.sForm', self.submitData)
 				console.log('pass', pass)

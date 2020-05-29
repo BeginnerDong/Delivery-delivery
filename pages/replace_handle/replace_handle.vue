@@ -45,7 +45,7 @@
 					</div> -->
 					
 					<view class="flex">
-						<hTimePicker sTime="0" cTime="24" interval="15" @changeTime="changeTime">
+						<hTimePicker sTime="0" cTime="24" interval="15" startValue="立即开始" @changeTime="changeTime">
 						  <view slot="pCon" class="changeTime">
 						    {{submitData.start_time}}
 						  </view>

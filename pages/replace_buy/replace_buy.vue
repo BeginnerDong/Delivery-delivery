@@ -88,7 +88,7 @@
 					</div> -->
 					
 					<view class="flex">
-						<hTimePicker sTime="0" cTime="24" interval="15" @changeTime="changeTime">
+						<hTimePicker sTime="0" cTime="24" interval="15" startValue="立即购买" @changeTime="changeTime">
 						  <view slot="pCon" class="changeTime">
 						    {{submitData.start_time}}
 						  </view>
@@ -195,7 +195,7 @@
 				<span class="fs12 color6" @click="moneyMxShow">关闭</span>
 				<span>费用明细</span>
 				<span class="flex">
-					<a class="pucolor fs12" href="price_specs.html">价格规格</a>
+					<a class="pucolor fs12"  @click="Router.navigateTo({route:{path:'/pages/price_specs/price_specs'}})">价格规格</a>
 					<img class="arrowR" src="../../static/images/icon.png" >
 				</span>
 			</div>

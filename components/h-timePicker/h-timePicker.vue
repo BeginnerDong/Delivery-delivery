@@ -23,6 +23,10 @@
 				type: [Number, String],
 				default: "0"
 			},
+			startValue:{
+				type: [String],
+				default: "立即取件"
+			},
 			cTime: { //结束小时
 				type: [Number, String],
 				default: "23"
@@ -70,7 +74,7 @@
 			},
 			pickerTap: function() {
 				let date = new Date();
-				let monthDay = ['立即取件'];
+				let monthDay = [this.startValue];
 				let hours = [''];
 				let minute = [''];
 				this.sDayNum = this.sDay;
@@ -230,7 +234,8 @@
 				let caseDate = da[0][di[0]] + ' ' + da[1][di[1]].replace('时', ':') + this.timeFormat(da[2][di[2]].replace('分', '')) +
 					":00"
 
-
+                console.log(caseDate);
+				caseDate = caseDate.replace(/\.|\-/g, '/');
 				let appointTime = new Date(caseDate).getTime() / 1000;
 				
 				if (appointTime < new Date().getTime() / 1000) {

@@ -91,9 +91,7 @@
 				const postData = {};
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.tokenFuncName = 'getProjectToken';
-				postData.order = {
-					star:'desc'
-				};
+				
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);

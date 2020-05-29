@@ -49,7 +49,7 @@
 						<li @click="Router.navigateTo({route:{path:'/pages/goodsInfor/goodsInfor?name=goodsInfo'}})">
 							<div class="flexRowBetween"  style="width: 100%;">
 								<i class="dian" style="background: #f01a1c;"></i>
-								<input type="text" value="" placeholder="请选择要配送的物品信息">
+								<input type="text" disabled="true" value="" placeholder="请选择要配送的物品信息">
 								<img class="arrow" src="../../static/images/icon.png" alt="">
 							</div>
 						</li>
@@ -104,7 +104,7 @@
 						<li @click="Router.navigateTo({route:{path:'/pages/goodsInfor/goodsInfor?name=sdGoodsInfo'}})">
 							<div class="flexRowBetween"  style="width: 100%;">
 								<i class="dian" style="background: #f01a1c;"></i>
-								<input type="text" value="" placeholder="请选择要配送的物品信息">
+								<input type="text"  disabled="true" value="" placeholder="请选择要配送的物品信息">
 								<img class="arrow" src="../../static/images/icon.png" alt="">
 							</div>
 						</li>
@@ -334,6 +334,17 @@
 					distance:'asc',
 					longitude:self.lng,
 					latitude:self.lat,
+				};
+				postData.getBefore = {
+					user:{
+						tableName:'User',
+						middleKey:'user_no',
+						key:'user_no',
+						searchItem:{
+							is_work:['in',[1]]
+						},
+						condition:'in'
+					}
 				};
 				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.paginate);

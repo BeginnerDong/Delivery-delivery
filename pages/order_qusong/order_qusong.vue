@@ -89,7 +89,7 @@
 						<span class="fs14 color3">立即取件</span><img class="arrowR" src="../../static/images/icon.png" >
 					</div> -->
 					<view class="flex">
-						<hTimePicker sTime="0" cTime="24" interval="15" @changeTime="changeTime">
+						<hTimePicker sTime="0" cTime="24" interval="15" startValue="立即取件" @changeTime="changeTime">
 						  <view slot="pCon" class="changeTime">
 						    {{submitData.start_time}}
 						  </view>
@@ -425,6 +425,17 @@
 			submit(){
 				const self = this;
 				uni.setStorageSync('canClick',false);
+				if(JSON.stringify(self.fromAddress)=="{}"){
+					uni.setStorageSync('canClick',true);
+					self.$Utils.showToast('请选择起始地点', 'none');
+					return;
+				};
+				
+				if(JSON.stringify(self.goAddress)=="{}"){
+					uni.setStorageSync('canClick',true);
+					self.$Utils.showToast('请选择终点地点', 'none');
+					return;
+				};
 				var data = self.$Utils.cloneForm(self.submitData);
 				var orderList = [
 					{product_id:self.goodsInfo.id,count:1,type:1,data:data}

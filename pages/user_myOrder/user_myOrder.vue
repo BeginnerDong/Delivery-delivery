@@ -46,7 +46,7 @@
 					</div>
 					
 					<div class="pd10 underBtn"  v-if="item.transport_status==1||item.transport_status==2">
-						<!-- <span class="Bbtn">取消订单</span> -->
+						<span class="Bbtn" @click="orderUpdate(index)">取消订单</span>
 						<span class="Bbtn" @click="xiaofeiShow(index)">追加小费</span>
 					</div>
 				</li>
@@ -129,6 +129,32 @@
 		},
 
 		methods: {
+			
+			
+			orderUpdate(index) {
+				const self = this;
+				uni.setStorageSync('canClick', false);
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.data = {
+					order_step:1,
+				};
+				postData.searchItem = {
+					id:self.mainData[index].id,
+				};
+				const callback = (data) => {
+					uni.setStorageSync('canClick', true);
+					if (data && data.solely_code == 100000) {
+						self.$Utils.showToast('操作成功','none');
+						setTimeout(function() {
+							self.getMainData(true)
+						}, 1000);
+					} else {
+						self.$Utils.showToast(data.msg,'none')
+					}
+				};
+				self.$apis.orderUpdate(postData, callback);
+			 },
 			
 			callPhone(index){
 				const self = this;
@@ -271,7 +297,7 @@
 				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
-				postData.searchItem.invalid_time = ['>',now];
+				//postData.searchItem.invalid_time = ['>',now];
 				postData.getAfter = {
 					rider: {
 						tableName: 'UserInfo',

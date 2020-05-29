@@ -33,7 +33,7 @@
 				<div class="f5H10"></div>
 				<div class="remarks pd10 bgwhite radius8" v-if="mainData.passage1!=''">
 					<div class="">备注信息</div>
-					<textarea placeholder="">{{mainData.passage1}}</textarea>
+					<textarea placeholder="备注" v-model="mainData.passage1"></textarea>
 				</div>
 				<li>
 					<div class=" pd10 flexRowBetween" v-if="mainData.transport_status==2">
@@ -55,8 +55,8 @@
 			<div class="center line40">费用明细</div>
 			<div class="infor fs12 color6">
 				<p class="flexRowBetween" v-for="(item,index) in moneyMxDate">
-					<span>{{mainData.title}}<i class="color9 mgl10">{{mainData.range}}</i></span>
-					<em class="red">{{mainData.price}}</em>
+					<span>{{item.title}}<i class="color9 mgl10">{{item.range}}</i></span>
+					<em class="red">{{item.price}}</em>
 				</p>
 			</div>
 		</div>

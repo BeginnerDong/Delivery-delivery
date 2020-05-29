@@ -87,10 +87,10 @@
 				postData.searchItem = {
 					id: self.orderId
 				};	
-				if(parseInt(self.userInfoData.member_time)>now){
+				if(parseInt(self.userInfoData.member_time)>nowTime){
 					self.time = parseInt(self.userInfoData.member_time) +self.mainData.duration
 				}else{
-					self.time = now + self.mainData.duration;
+					self.time = nowTime + self.mainData.duration;
 				};
 				postData.payAfter = [{
 					tableName: 'UserInfo',

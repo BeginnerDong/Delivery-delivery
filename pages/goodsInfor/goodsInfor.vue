@@ -18,7 +18,7 @@
 				</div>
 				<div class="" style="color: #9999;font-size: 12px;">温馨提示：请勿配送违禁品及3000元以上物品</div>
 				<div class="title">物品重量</div>
-				<div class="center fs18 pucolor">{{rangeValues[1]}}公斤</div>
+				<div class="center fs18 pucolor">{{rangeValues[1]==0?'5公斤以下':parseFloat(rangeValues[1])+5+'公斤'}}</div>
 				<div class="weightRange">
 					<RangeSlider
 						:width="slideWidth"
@@ -137,7 +137,7 @@
 			onRangeChange: function(e) {
 				const self = this;
 				this.rangeValues = [e.minValue, e.maxValue];
-				self.info.weight = parseFloat(e.maxValue);
+				self.info.weight = parseFloat(e.maxValue)+5;
 				console.log(this.rangeValues);
 			},
 			
@@ -171,10 +171,11 @@
 						self.mainData.push.apply(self.mainData, res.info.data);
 						self.info = self.mainData[0];
 						self.info.value = self.moneyDate[0];
-						if(self.mainData[0].param2.length>0){
+						/* if(self.mainData[0].param2.length>0){
 							this.rangeValues = [0, self.mainData[0].param2[0].weight];
 							self.info.weight = self.mainData[0].param2[0].weight;
-						}
+						} */
+						self.info.weight = 5
 					} else {
 						self.$Utils.showToast('没有更多了', 'none');
 					};
