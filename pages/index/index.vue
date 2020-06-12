@@ -209,14 +209,7 @@
 		},
 
 
-		onReachBottom() {
-			console.log('onReachBottom')
-			const self = this;
-			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
-				self.paginate.currentPage++;
-				self.getRiderData()
-			};
-		},
+		
 
 		onPullDownRefresh() {
 			console.log('refresh');
@@ -316,14 +309,8 @@
 			
 			getRiderData(isNew) {
 				const self = this;
-				if (isNew) {
-					self.riderData = [];
-					self.paginate = {
-						count: 0,
-						currentPage: 1,
-						is_page: true,
-						pagesize: 5
-					}
+				if(isNew){
+					self.riderData = []
 				};
 				const postData = {};
 				postData.searchItem = {
@@ -347,7 +334,12 @@
 					}
 				};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.paginate = {
+					count: 0,
+					currentPage: 1,
+					is_page: true,
+					pagesize: 5
+				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.riderData.push.apply(self.riderData, res.info.data);

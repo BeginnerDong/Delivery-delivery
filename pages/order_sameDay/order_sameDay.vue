@@ -183,7 +183,7 @@
 				is_baojiaShow:false,
 				is_tippingShow:false,
 				is_moneyMxShow:false,
-				seltCurr:-1,
+				seltCurr:0,
 				seltCur:0,
 				seltData:0,
 				tipDate:[{name:'不加了',value:0},{name:'2元',value:2},{name:'5元',value:5},
@@ -498,10 +498,10 @@
 				
 				self.is_show = !self.is_show
 				self.is_tippingShow = !self.is_tippingShow
-				if(self.seltCurr==-1){
+				/* if(self.seltCurr==-1){
 					self.seltCurr=0;
 					self.tip = self.tipDate[0].value;
-				}
+				} */
 				
 			},
 			

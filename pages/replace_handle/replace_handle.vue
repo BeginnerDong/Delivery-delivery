@@ -201,7 +201,7 @@
 				is_tippingShow:false,
 				tipDate:[{name:'不加了',value:0},{name:'2元',value:2},{name:'5元',value:5},
 				{name:'10元',value:10},{name:'15元',value:15},{name:'20元',value:20}],
-				seltCurr:-1,
+				seltCurr:0,
 				is_moneyMxShow:false,
 				moneyMxDate:[
 					
@@ -727,10 +727,10 @@
 				
 				self.is_show = !self.is_show
 				self.is_tippingShow = !self.is_tippingShow
-				if(self.seltCurr==-1){
+				/* if(self.seltCurr==-1){
 					self.seltCurr=0;
 					self.tip = self.tipDate[0].value;
-				}
+				} */
 				
 			},
 			

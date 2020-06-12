@@ -190,7 +190,8 @@
 				self.seltCurr=index;
 				self.info = self.mainData[self.seltCurr];
 				self.info.value = self.moneyDate[0];
-				self.rangeValues = [0, 0]
+				self.rangeValues = [0, 0];
+				self.info.weight = 5
 				//self.info.goodsInfo.value = self.moneyDate[self.seltCurrTwo];
 			},
 			

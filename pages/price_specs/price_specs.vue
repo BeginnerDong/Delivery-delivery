@@ -24,6 +24,9 @@
 			self.id = options.id;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.$Utils.loadAll(['getMainData'], self);
+			if(options.type){
+				uni.setStorageSync('target',options.type)
+			};
 		},
 
 		methods: {

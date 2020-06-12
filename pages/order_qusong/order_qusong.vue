@@ -174,7 +174,7 @@
 				<div class="item flexRowBetween">
 					<span v-for="(item,index) in tipDate" :key="index" :class="seltCurr == index?'on':''" 
 					@click="seltSpecs(index)">{{item.name}}</span>
-					<span><input style="height: 28px;" placeholder="其他金额" v-model="tip" @focus="tipInput()"/></span>
+					<span><input style="height: 28px;" placeholder="其他金额" v-model="tip" @focus="tipInput"/></span>
 				</div>
 			</div>
 		</div>
@@ -205,7 +205,7 @@
 				<span class="fs12 color6" @click="moneyMxShow">关闭</span>
 				<span>费用明细</span>
 				<span class="flex">
-					<a class="pucolor fs12"  @click="Router.navigateTo({route:{path:'/pages/price_specs/price_specs'}})">价格规格</a>
+					<a class="pucolor fs12"  @click="Router.navigateTo({route:{path:'/pages/price_specs/price_specs?type=view'}})">价格规格</a>
 					<img class="arrowR" src="../../static/images/icon.png" >
 				</span>
 			</div>
@@ -245,7 +245,7 @@
 				is_tippingShow:false,
 				is_accessShow:false,
 				is_moneyMxShow:false,
-				seltCurr:-1,
+				seltCurr:0,
 				seltCur:0,
 				seltData:0,
 				
@@ -322,39 +322,45 @@
 		
 		onShow() {
 			const self = this;
-			var now = Date.parse(new Date())/1000;
-			self.submitData.invalid_time = now+3600;
-			if(uni.getStorageSync('fromAddress')){
-				
-				self.fromAddress = uni.getStorageSync('fromAddress');
-				self.submitData.start_site = self.fromAddress.city+self.fromAddress.detail;
-				self.submitData.start_latitude = self.fromAddress.latitude;
-				self.submitData.start_longitude = self.fromAddress.longitude;
-				self.submitData.start_name = self.fromAddress.name;
-				self.submitData.start_phone = self.fromAddress.phone;
-			};
-			if(uni.getStorageSync('goAddress')){
-				self.goAddress = uni.getStorageSync('goAddress');
-				self.submitData.end_site = self.goAddress.city+self.goAddress.detail;
-				self.submitData.end_latitude = self.goAddress.latitude;
-				self.submitData.end_longitude = self.goAddress.longitude;
-				self.submitData.end_name = self.goAddress.name;
-				self.submitData.end_phone = self.goAddress.phone;
-			};
-			if(uni.getStorageSync('goodsInfo')){
-				self.goodsInfo = uni.getStorageSync('goodsInfo');
-				self.submitData.weight = self.goodsInfo.weight;
-				self.submitData.value = self.goodsInfo.value;
-			};
-			self.totalPrice = parseFloat(self.goodsInfo.price);
-			console.log('self.totalPrice',self.totalPrice)
-			self.submitData.main_price = self.totalPrice;
-			self.moneyMxDate.push({title:'基础配送费',price:'￥'+self.submitData.main_price});
-			if(self.fromAddress.latitude&&self.goAddress.latitude){
-				self.getBaiduDistance()
-				
+			if(!uni.getStorageSync('target')){
+				var now = Date.parse(new Date())/1000;
+				self.submitData.invalid_time = now+3600;
+				if(uni.getStorageSync('fromAddress')){
+					
+					self.fromAddress = uni.getStorageSync('fromAddress');
+					self.submitData.start_site = self.fromAddress.city+self.fromAddress.detail;
+					self.submitData.start_latitude = self.fromAddress.latitude;
+					self.submitData.start_longitude = self.fromAddress.longitude;
+					self.submitData.start_name = self.fromAddress.name;
+					self.submitData.start_phone = self.fromAddress.phone;
+				};
+				if(uni.getStorageSync('goAddress')){
+					self.goAddress = uni.getStorageSync('goAddress');
+					self.submitData.end_site = self.goAddress.city+self.goAddress.detail;
+					self.submitData.end_latitude = self.goAddress.latitude;
+					self.submitData.end_longitude = self.goAddress.longitude;
+					self.submitData.end_name = self.goAddress.name;
+					self.submitData.end_phone = self.goAddress.phone;
+				};
+				if(uni.getStorageSync('goodsInfo')){
+					self.goodsInfo = uni.getStorageSync('goodsInfo');
+					self.submitData.weight = self.goodsInfo.weight;
+					self.submitData.value = self.goodsInfo.value;
+				};
+				self.totalPrice = parseFloat(self.goodsInfo.price);
+				console.log('self.totalPrice',self.totalPrice)
+				self.submitData.main_price = self.totalPrice;
+				self.moneyMxDate = [];
+				self.moneyMxDate.push({title:'基础配送费',price:'￥'+self.submitData.main_price});
+				if(self.fromAddress.latitude&&self.goAddress.latitude){
+					self.getBaiduDistance()
+					
+				}
+				self.getUserCouponData(true)
+			}else{
+				uni.removeStorageSync('target')
 			}
-			self.getUserCouponData(true)
+			
 		},
 
 		methods: {
@@ -863,10 +869,10 @@
 				
 				self.is_show = !self.is_show
 				self.is_tippingShow = !self.is_tippingShow
-				if(self.seltCurr==-1){
+				/* if(self.seltCurr==-1){
 					self.seltCurr=0;
 					self.tip = self.tipDate[0].value;
-				}
+				} */
 				
 			},
 			
