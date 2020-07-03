@@ -5,6 +5,7 @@
 			<div class="tt" :class="num==2?'on':''" @click="change('2')">待接单</div>
 			<div class="tt" :class="num==3?'on':''" @click="change('3')">进行中</div>
 			<div class="tt" :class="num==4?'on':''" @click="change('4')">已完成</div>
+			<div class="tt" :class="num==5?'on':''" @click="change('5')">已取消</div>
 		</div>
 		
 		<div class="orderList pdlr4">
@@ -16,10 +17,11 @@
 								<div class="color6" style="margin-bottom: 10rpx;">{{item.create_time}}</div>
 								<div class="color9">订单编号：{{item.order_no}}</div>
 							</div>
-							<div class="state" v-if="item.transport_status==1">待接单</div>
+							<div class="state" v-if="item.transport_status==1&&item.order_step==0">待接单</div>
 							<!-- <div class="state" v-if="item.transport_status==2">骑手已接单</div> -->
-							<div class="state" v-if="item.transport_status==2">进行中</div>
-							<div class="state" v-if="item.transport_status==3">已完成</div>
+							<div class="state" v-if="item.transport_status==2&&item.order_step==0">进行中</div>
+							<div class="state" v-if="item.transport_status==3&&item.order_step==0">已完成</div>
+							<div class="state" v-if="item.order_step>0">已取消</div>
 						</div>
 						<div class="msg pdlr10 pr">
 							<div class="lable" v-if="item.type==1">取送件</div>
@@ -36,7 +38,7 @@
 						<span class="price">{{item.price}}</span>
 						<img class="arrowR" src="../../static/images/icon.png" >
 					</div>
-					<div class=" pd10 flexRowBetween" v-if="item.transport_status==2||item.transport_status==3">
+					<div class=" pd10 flexRowBetween" v-if="item.transport_status==2&&item.order_step==0||item.transport_status==3&&item.order_step==0">
 						<div class="flex" @click="callPhone(index)">
 							<img class="persIcon" src="../../static/images/details-icon.png" >
 							<span >{{item.rider.name}}&nbsp;&nbsp;&nbsp;&nbsp;{{item.rider.phone}}</span>
@@ -45,7 +47,7 @@
 						<img class="phoneIcon" src="../../static/images/details-icon1.png" alt="">
 					</div>
 					
-					<div class="pd10 underBtn"  v-if="item.transport_status==1||item.transport_status==2">
+					<div class="pd10 underBtn"  v-if="item.transport_status==1&&item.order_step==0||item.transport_status==2&&item.order_step==0">
 						<span class="Bbtn" @click="orderUpdate(index)">取消订单</span>
 						<span class="Bbtn" @click="xiaofeiShow(index)">追加小费</span>
 					</div>
@@ -133,27 +135,35 @@
 			
 			orderUpdate(index) {
 				const self = this;
-				uni.setStorageSync('canClick', false);
-				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-				postData.data = {
-					order_step:1,
-				};
-				postData.searchItem = {
-					id:self.mainData[index].id,
-				};
-				const callback = (data) => {
-					uni.setStorageSync('canClick', true);
-					if (data && data.solely_code == 100000) {
-						self.$Utils.showToast('操作成功','none');
-						setTimeout(function() {
-							self.getMainData(true)
-						}, 1000);
-					} else {
-						self.$Utils.showToast(data.msg,'none')
+				uni.showModal({
+					title:'提示',
+					content:'确定取消此订单吗?',
+					success(res) {
+						if(res.confirm){
+							uni.setStorageSync('canClick', false);
+							const postData = {};
+							postData.tokenFuncName = 'getProjectToken';
+							postData.data = {
+								order_step:1,
+							};
+							postData.searchItem = {
+								id:self.mainData[index].id,
+							};
+							const callback = (data) => {
+								uni.setStorageSync('canClick', true);
+								if (data && data.solely_code == 100000) {
+									self.$Utils.showToast('操作成功','none');
+									setTimeout(function() {
+										self.getMainData(true)
+									}, 1000);
+								} else {
+									self.$Utils.showToast(data.msg,'none')
+								}
+							};
+							self.$apis.orderUpdate(postData, callback);
+						}
 					}
-				};
-				self.$apis.orderUpdate(postData, callback);
+				})
 			 },
 			
 			callPhone(index){
@@ -270,12 +280,19 @@
 					self.num = num;
 					if(self.num==1){
 						delete self.searchItem.transport_status
+						delete self.searchItem.order_step
 					}else if(self.num==2){
 						self.searchItem.transport_status =['in',[1]]
+						self.searchItem.order_step = 0
 					}else if(self.num==3){
 						self.searchItem.transport_status =['in',[2]]
+						self.searchItem.order_step = 0
 					}else if(self.num==4){
 						self.searchItem.transport_status =['in',[3]]
+						self.searchItem.order_step = 0
+					}else if(self.num==5){
+						self.searchItem.order_step = ['>',0]
+						delete self.searchItem.transport_status
 					}
 					self.getMainData(true)
 				}
