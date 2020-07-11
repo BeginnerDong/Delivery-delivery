@@ -454,10 +454,10 @@
 			
 			addOrder(orderList) {
 				const self = this;	
-				if(self.orderId){
+				/* if(self.orderId){
 					 self.payNow();
 					 return
-				};
+				}; */
 				const postData = {}; 
 				postData.orderList = self.$Utils.cloneForm(orderList);
 				postData.tokenFuncName = 'getProjectToken';
