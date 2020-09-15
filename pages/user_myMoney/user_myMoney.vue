@@ -9,7 +9,7 @@
 		<div class="myRowBetween" v-if="mainData.length>0">
 			<div class="item flexRowBetween" v-for="(item,index) in mainData" :key="index">
 				<div class="left">
-					<div class="avoidOverflow">{{item.trade_info}}
+					<div class="">{{item.trade_info}}
 					<span style="font-size:12px;color: red;" v-if="item.status==0">(审核中)</span></div>
 					<div class="time">{{item.create_time}}</div>
 				</div>

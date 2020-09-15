@@ -28,14 +28,14 @@
 							<div class="lable" v-if="item.type==2">代办</div>	
 							<div class="lable" v-if="item.type==3">代买</div>	
 							<div class="lable" v-if="item.type==4">当日达</div>	
-							<span><i class="dian"></i>{{item.start_site}}</span>
+							<span><i class="dian" v-if="item.start_site!=''"></i>{{item.start_site}}</span>
 							<span><i class="dian red" v-if="item.end_site!=''"></i>{{item.end_site}}</span>
 							<span><img class="icon" src="../../static/images/order-icon.png" >{{item.title}}</span>
-							<span><img class="icon" src="../../static/images/order-icon1.png" >{{item.start_time}}</span>
+							<span><img class="icon" src="../../static/images/order-icon1.png" v-if="item.start_time!=''">{{item.start_time}}</span>
 						</div>
 					</a>
 					<div class="Rmny bordB1"  @click="moneyMxShow(index)">
-						<span class="price">{{item.price}}</span>
+						<span class="price">{{item.realPrice}}</span>
 						<img class="arrowR" src="../../static/images/icon.png" >
 					</div>
 					<div class=" pd10 flexRowBetween" v-if="item.transport_status==2&&item.order_step==0||item.transport_status==3&&item.order_step==0">
@@ -47,9 +47,9 @@
 						<img class="phoneIcon" src="../../static/images/details-icon1.png" alt="">
 					</div>
 					
-					<div class="pd10 underBtn"  v-if="item.transport_status==1&&item.order_step==0||item.transport_status==2&&item.order_step==0">
-						<span class="Bbtn" @click="orderUpdate(index)">取消订单</span>
-						<span class="Bbtn" @click="xiaofeiShow(index)">追加小费</span>
+					<div class="pd10 underBtn">
+						<span class="Bbtn" @click="orderUpdate(index)"   v-if="item.transport_status==1&&item.order_step==0">取消订单</span>
+						<span class="Bbtn" @click="xiaofeiShow(index)"   v-if="item.transport_status!=3&&item.order_step==0">追加小费</span>
 					</div>
 				</li>
 				
@@ -62,7 +62,7 @@
 			<div class="q-close fs24 mgr10" @click="moneyMxClose"><em class="color3">x</em></div>
 			<div class="center line40">费用明细</div>
 			<div class="infor fs12 color6">
-				<p class="flexRowBetween" v-for="(item,index) in moneyMxDate">
+				<p class="flexRowBetween" v-for="(item,index) in moneyMxDate" :key="index">
 					<span>{{item.title}}<i class="color9 mgl10">{{item.range}}</i></span>
 					<em class="red">{{item.price}}</em>
 				</p>
@@ -101,7 +101,8 @@
 				searchItem:{
 					thirdapp_id: 2,
 					pay_status:1,
-					type:['in',[1,2,3,4]]
+					type:['in',[1,2,3,4]],
+					order_step:0
 				},
 				submitData:{
 					price:''
@@ -117,8 +118,13 @@
 				self.num=options.num;
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getMainData'], self);
+			
 		
+		},
+		
+		onShow() {
+			const self = this;
+			self.getMainData(true)
 		},
 		
 		onReachBottom() {
@@ -175,7 +181,9 @@
 			
 			pay() {
 				const self = this;
-				const postData = {};	
+				const postData = {};
+				var riderAdd = (parseFloat(self.submitData.price) - (parseFloat(uni.getStorageSync('user_info').thirdApp.custom_rule.tax)/100)*parseFloat(self.submitData.price)).toFixed(2)
+				var now = Date.parse(new Date())/1000;
 				postData.wxPay = {
 					price:parseFloat(self.submitData.price).toFixed(2)
 				};
@@ -189,7 +197,11 @@
 						FuncName: 'update',
 						data: {
 							price:(parseFloat(self.mainData[self.xfIndex].price) + parseFloat(self.submitData.price)).toFixed(2),
-							gratuity:(parseFloat(self.mainData[self.xfIndex].gratuity) + parseFloat(self.submitData.price)).toFixed(2)
+							gratuity:(parseFloat(self.mainData[self.xfIndex].gratuity) + parseFloat(self.submitData.price)).toFixed(2),
+							invalid_time:now+3600,
+							rider_income:(parseFloat(riderAdd) + parseFloat(self.mainData[self.xfIndex].rider_income)).toFixed(2),
+							platform_income:(parseFloat(self.mainData[self.xfIndex].platform_income)
+							+parseFloat(uni.getStorageSync('user_info').thirdApp.custom_rule.tax)/100*parseFloat(self.submitData.price)).toFixed(2)
 						},
 						searchItem:{
 							id:self.mainData[self.xfIndex].id
@@ -211,6 +223,8 @@
 										}
 									});
 									setTimeout(function() {
+										self.is_show = !self.is_show
+										self.is_xiaofeiShow = !self.is_xiaofeiShow
 										self.getMainData(true)
 									}, 1000);
 								} else {
@@ -231,7 +245,8 @@
 								}
 							});
 							setTimeout(function() {
-								
+								self.is_show = !self.is_show
+								self.is_xiaofeiShow = !self.is_xiaofeiShow
 								self.getMainData(true)
 								
 							}, 1000);
@@ -250,17 +265,17 @@
 			addOrder() {
 				const self = this;
 				uni.setStorageSync('canClick', false);	
-				if(self.orderId!=''){
+				/* if(self.orderId!=''){
 					self.pay();
 					return
-				};
+				}; */
 				const postData = {};	
 				/* postData.wxPay = {
 					price:parseFloat(self.submitData.price).toFixed(2)
 				}; */
 				postData.tokenFuncName = 'getProjectToken',
 				postData.data = {
-					//parent_no:self.mainData.parentOrder[0].order_no,
+					passage2:self.mainData[self.xfIndex].order_no,
 					price:parseFloat(self.submitData.price).toFixed(2)
 				}
 				const callback = (res) => {
@@ -280,19 +295,24 @@
 					self.num = num;
 					if(self.num==1){
 						delete self.searchItem.transport_status
-						delete self.searchItem.order_step
+						self.searchItem.order_step = 0
+						self.searchItem.pay_status = 1
 					}else if(self.num==2){
 						self.searchItem.transport_status =['in',[1]]
 						self.searchItem.order_step = 0
+						self.searchItem.pay_status = 1
 					}else if(self.num==3){
 						self.searchItem.transport_status =['in',[2]]
 						self.searchItem.order_step = 0
+						self.searchItem.pay_status = 1
 					}else if(self.num==4){
 						self.searchItem.transport_status =['in',[3]]
 						self.searchItem.order_step = 0
+						self.searchItem.pay_status = 1
 					}else if(self.num==5){
 						self.searchItem.order_step = ['>',0]
 						delete self.searchItem.transport_status
+						self.searchItem.pay_status = 0
 					}
 					self.getMainData(true)
 				}
@@ -331,6 +351,9 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
+						for (var i = 0; i < self.mainData.length; i++) {
+							self.mainData[i].realPrice = (parseFloat(self.mainData[i].price)  - parseFloat(self.mainData[i].coupon_reduce)).toFixed(2)
+						}
 					}
 					console.log('self.mainData', self.mainData)
 					self.$Utils.finishFunc('getMainData');
@@ -350,6 +373,9 @@
 				self.moneyMxDate.push({title:'基础配送费',price:'￥'+self.mainData[index].main_price});
 				if(parseFloat(self.mainData[index].distance_price)>0){
 					self.moneyMxDate.push({title:'距离附加费',price:'￥'+self.mainData[index].distance_price})
+				};
+				if(parseFloat(self.mainData[index].time_price)>0){
+					self.moneyMxDate.push({title:'时长附加',price:'￥'+self.mainData[index].time_price})
 				};
 				if(parseFloat(self.mainData[index].weight_price)>0){
 					self.moneyMxDate.push({title:'重量附加费',price:'￥'+self.mainData[index].weight_price})
@@ -372,7 +398,13 @@
 				if(parseFloat(self.mainData[index].gratuity)>0){
 					self.moneyMxDate.push({title:'小费',price:'￥'+self.mainData[index].gratuity})
 				};
-				self.moneyMxDate.push({title:'总计',price:'￥'+self.mainData[index].price})
+				if(parseFloat(self.mainData[index].member_reduce)>0){
+					self.moneyMxDate.push({title:'会员抵扣',price:'-￥'+self.mainData[index].member_reduce})
+				};
+				if(parseFloat(self.mainData[index].coupon_reduce)>0){
+					self.moneyMxDate.push({title:'优惠券抵扣',price:'-￥'+self.mainData[index].coupon_reduce})
+				};
+				self.moneyMxDate.push({title:'总计',price:'￥'+ self.mainData[index].realPrice})
 				self.is_show = !self.is_show
 				self.is_moneyMxShow = !self.is_moneyMxShow
 			},

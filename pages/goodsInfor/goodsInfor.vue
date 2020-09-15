@@ -166,6 +166,9 @@
 						}
 					},
 				};
+				postData.order = {
+					listorder: 'desc'
+				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
@@ -205,6 +208,10 @@
 			submit(){
 				const self = this;
 				console.log(213)
+				if(!self.info.title){
+					self.$Utils.showToast('物品类型异常，请重试', 'none');
+					return
+				};
 				if(JSON.stringify(self.info)=='{}'){
 					self.$Utils.showToast('无物品类型', 'none');
 					return

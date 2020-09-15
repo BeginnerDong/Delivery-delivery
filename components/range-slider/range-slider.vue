@@ -350,6 +350,6 @@
 		transform: translate(0, -50%);
 		background: #fff;
 		border-radius: 50%;
-		box-shadow: 0upx 0upx 6upx #ccc;
+		box-shadow: 0upx 0upx 6upx #222;
 	}
 </style>

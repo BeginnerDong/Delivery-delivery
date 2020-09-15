@@ -460,6 +460,9 @@
 				}; */
 				const postData = {}; 
 				postData.orderList = self.$Utils.cloneForm(orderList);
+				if(!wx.getStorageSync('user_info')||wx.getStorageSync('user_info').headImgUrl==''||!wx.getStorageSync('user_info').headImgUrl){
+				  postData.refreshToken = true;
+				};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
 					if (res && res.solely_code == 100000) {
@@ -613,8 +616,8 @@
 							city_id:uni.getStorageSync('city_id'),
 							fee_type:3,
 							is_use:1,
-							start:['<=',currHours],
-							end:['>=',currHours],
+							start:['<',currHours],
+							end:['>',currHours],
 							type:1,
 						},
 						condition:'=',

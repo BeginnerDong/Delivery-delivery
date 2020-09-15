@@ -1,12 +1,16 @@
 html{color:#222;-webkit-text-size-adjust: none;}
 body{max-width: 640px;margin:0 auto;font-size:14px;line-height: 20px;font-family:'微软雅黑','Helvetica Neue',Helvetica,Arial,'Microsoft YaHei','WenQuanYi Zen Hei','WenQuanYi Micro Hei'; }
-*{margin:0; padding:0;}
+*{margin:0; padding:0;-webkit-user-select:none;
+ -khtml-user-select:none;
+ -moz-user-select:none;
+ -ms-user-select:none;
+ user-select:none;}
 img{ border:none;display:block;}
 ul,li{list-style:none;}
 button, input, optgroup, option, select, textarea {font-weight: inherit;outline: 0;font-family:'微软雅黑'}
 a{ text-decoration: none; outline: none ; color:#333;cursor: pointer;-webkit-tap-highlight-color:transparent}
 em,i{font-style:normal;}
-button,input{ border: none;}
+button,input{ border: none;-webkit-user-select:auto}
 input, button,textarea{ cursor: pointer; -webkit-appearance: none;-webkit-tap-highlight-color:rgba(0,0,0,0);tap-highlight-color:rgba(0,0,0,0); }
 input[type="checkbox"]{ -webkit-appearance: checkbox;-moz-appearance: checkbox;appearance: checkbox;}
 input::-webkit-input-placeholder {color: #999;}

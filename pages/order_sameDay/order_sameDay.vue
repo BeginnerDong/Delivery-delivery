@@ -376,6 +376,9 @@
 				}; */
 				const postData = {}; 
 				postData.orderList = self.$Utils.cloneForm(orderList);
+				if(!wx.getStorageSync('user_info')||wx.getStorageSync('user_info').headImgUrl==''||!wx.getStorageSync('user_info').headImgUrl){
+				  postData.refreshToken = true;
+				};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
 					if (res && res.solely_code == 100000) {

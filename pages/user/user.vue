@@ -94,7 +94,7 @@
 				</a>
 			</div>
 			<div class="info">
-				<a  @click="Router.navigateTo({route:{path:'/pages/address/address'}})">
+				<a  @click="Router.navigateTo({route:{path:'/pages/address/address?from=user'}})">
 					<div class="flex">
 						<img class="icon" src="../../static/images/about-icon8.png">
 						<span class="tt">地址薄</span>

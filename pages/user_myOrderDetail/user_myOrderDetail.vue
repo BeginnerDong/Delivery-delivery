@@ -9,10 +9,12 @@
 								<div class="color6" style="margin-bottom: 10rpx;">{{mainData.create_time}}</div>
 								<div class="color9">订单编号：{{mainData.order_no}}</div>
 							</div>
-							<div class="state" v-if="mainData.transport_status==1">待接单</div>
-							<div class="state" v-if="mainData.transport_status==2">骑手已接单</div>
+							<div class="state" v-if="mainData.transport_status==1&&mainData.order_step==0">待接单</div>
+							<div class="state" v-if="mainData.transport_status==2&&mainData.order_step==0">骑手已接单</div>
 							<!-- <div class="state" v-if="mainData.transport_status==2">进行中</div> -->
-							<div class="state" v-if="mainData.transport_status==3">已完成</div>
+							<div class="state" v-if="mainData.transport_status==3&&mainData.order_step==0">已完成</div>
+							<div class="state" v-if="mainData.order_step>0">已取消</div>
+
 						</div>
 						<div class="msg pdlr10 pr">
 							<div class="lable" v-if="mainData.type==1">取送件</div>
@@ -26,7 +28,7 @@
 						</div>
 					</a>
 					<div class="Rmny bordB1"  @click="moneyMxShow(index)">
-						<span class="price">{{mainData.price}}</span>
+						<span class="price">{{mainData.realPrice}}</span>
 						<img class="arrowR" src="../../static/images/icon.png" >
 					</div>
 				</li>
@@ -109,6 +111,7 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData = res.info.data[0]
+						self.mainData.realPrice = (parseFloat(self.mainData.price)  - parseFloat(self.mainData.coupon_reduce)).toFixed(2)
 					}
 					console.log('self.mainData', self.mainData)
 					self.$Utils.finishFunc('getMainData');
@@ -151,7 +154,13 @@
 				if(parseFloat(self.mainData.gratuity)>0){
 					self.moneyMxDate.push({title:'小费',price:'￥'+self.mainData.gratuity})
 				};
-				self.moneyMxDate.push({title:'总计',price:'￥'+self.mainData.price})
+				if(parseFloat(self.mainData.member_reduce)>0){
+					self.moneyMxDate.push({title:'会员抵扣',price:'-￥'+self.mainData.member_reduce})
+				};
+				if(parseFloat(self.mainData.coupon_reduce)>0){
+					self.moneyMxDate.push({title:'优惠券抵扣',price:'-￥'+self.mainData.coupon_reduce})
+				};
+				self.moneyMxDate.push({title:'总计',price:'￥'+ self.mainData.realPrice})
 				self.is_show = !self.is_show
 				self.is_moneyMxShow = !self.is_moneyMxShow
 			},

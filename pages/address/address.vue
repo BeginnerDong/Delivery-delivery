@@ -4,15 +4,19 @@
 		<div class="addressLis">
 			<ul style="padding-bottom: 200rpx;">
 				<li v-for="(item,index) in mainData" :key="index">
-					<h1 class="name flexRowBetween"  @click="choose(index)">{{item.name}} <em class="phone">{{item.phone}}</em></h1>
-					<p class="adrs"  @click="choose(index)">{{item.city+item.detail}}</p>
-					<div class="flexRowBetween">
+					<h1 class="name flexRowBetween">
+						<div class="flexRowBetween"  @click="choose(index)">
+							{{item.name}}
+							<em class="phone" style="margin-left: 10rpx;">{{item.phone}}</em>
+						</div>
+						
 						<div class="left">
 							<img class="xing" :src="item.star==1?'../../static/images/address-icon2.png':''">
 						</div>
+						
 						<div class="right">
 							<div class="tt" :data-id="item.id" 
-							@click="Router.redirectTo({route:{path:'/pages/address_add/address_add?id='+$event.currentTarget.dataset.id+'&name='+name}})">
+							@click="Router.navigateTo({route:{path:'/pages/address_add/address_add?id='+$event.currentTarget.dataset.id+'&name='+name}})">
 								<img src="../../static/images/address-icon.png" alt="">
 								<span>编辑</span>
 							</div>
@@ -21,13 +25,19 @@
 								<span>删除</span>
 							</div>
 						</div>
-					</div>
+					</h1>
+					<p class="adrs"  @click="choose(index)">{{item.city+item.detail}}</p>
+					<!-- <div class="flexRowBetween">
+						
+						
+					</div> -->
 				</li>
 			</ul>
 		</div>
 		
 		<div class="submitbtn" style="margin-top: 80px;position: fixed;">
-			<a class="btn" style="position: fixed;margin-left: 10%;bottom: 50rpx;"   @click="Router.redirectTo({route:{path:'/pages/address_add/address_add?name='+name}})">添加地址</a>
+			<div class="btn" style="position: fixed;width:100%;bottom: 0;margin: 0;border-radius: 0;"  
+			 @click="Router.redirectTo({route:{path:'/pages/address_add/address_add?name='+name}})">添加地址</div>
 		</div>
 	</div>
 
@@ -51,7 +61,10 @@
 		onLoad(options) {
 			const self = this;
 			self.name = options.name; 
-			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			if(options.from){
+				self.no = true
+			};
+			
 		},
 		
 		onReachBottom() {
@@ -66,6 +79,7 @@
 		onShow() {
 			const self = this;
 			self.mainData = [];
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			var res = self.$Token.getProjectToken(function() {
 				self.$Utils.loadAll(['getMainData'], self)
 			});
@@ -78,6 +92,9 @@
 			
 			choose(index) {
 				const self = this;
+				if(self.no){
+					return
+				};
 				self.choosedIndex = index;
 				uni.setStorageSync(self.name+'Address', self.mainData[index]);
 				console.log('choosedIndex', self.choosedIndex);

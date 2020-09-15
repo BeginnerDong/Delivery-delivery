@@ -23,19 +23,25 @@
 				</li> -->
 				<li>
 					<div class="title">选择位置</div>
-					<div class="rightMsg" @click="chooseAddress()">
-						<input type="text" placeholder="选择您的位置" disabled="true"   v-model="submitData.city">
+					<div class="rightMsg flexRowBetween color9" @click="chooseAddress()">
+						<div v-if="submitData.city!=''"  style="color: #222;">
+							{{submitData.city}}
+						</div>
+						<div v-if="submitData.city==''" style="color: #888;">
+							选择具体位置信息
+						</div>
+						<img class="arrowR" src="../../static/images/icon.png" alt="">
 					</div>
 				</li>
 				<li>
 					<div class="title">详细地址</div>
 					<div class="rightMsg">
-						<input type="text" placeholder="如楼号、门牌号"   v-model="submitData.detail">
+						<textarea style="width: 95%;height: 100rpx;background: #f5f5f5;padding: 10rpx;" type="text" placeholder="如楼号、门牌号"   v-model="submitData.detail"></textarea>
 					</div>
 				</li>
 				<li >
-					<div class="title">设为星标地址</div>
-					<div class="rightMsg">
+					<div class="title"  style="width: 50%;">设为星标地址</div>
+					<div class="rightMsg"  style="width:50%;text-align: right">
 						<switch @change="choose" :checked="submitData.star==1?true:false" color="#2FA0ED"></switch>
 					</div>
 				</li>	
@@ -127,7 +133,7 @@
 				        uni.chooseLocation({
 				        	success: (res) => {
 				        		console.log(res)
-				        		self.submitData.city = res.name;
+				        		self.submitData.city = res.address+res.name;
 								var newObject = self.$Utils.qqMapTransBMap(res.longitude,res.latitude)
 							
 				        		self.submitData.longitude = newObject.lng;
@@ -143,7 +149,7 @@
 				        					console.log('地图点击取消')
 				        					uni.chooseLocation({
 				        						success: (res) => {
-				        							self.submitData.city = res.name;
+				        							self.submitData.city = res.address+res.name;
 				        							var newObject = self.$Utils.qqMapTransBMap(res.longitude,res.latitude)
 				        														
 				        							self.submitData.longitude = newObject.lng;
@@ -286,12 +292,13 @@
 					uni.setStorageSync('canClick', true);
 					if (data && data.solely_code == 100000) {
 						self.$Utils.showToast('修改成功','success');
-						self.Router.redirectTo({route:{path:'/pages/address/address?name='+self.name}})
-						/* setTimeout(function() {
+						//self.Router.redirectTo({route:{path:'/pages/address/address?name='+self.name}})
+						uni.setStorageSync(self.name+'Address', self.submitData);
+						setTimeout(function() {
 							uni.navigateBack({
 								delta:1
 							})
-						}, 1000); */
+						}, 1000);
 						
 					} else {
 						self.$Utils.showToast(data.msg,'error')
@@ -315,12 +322,13 @@
 					uni.setStorageSync('canClick', true);
 					if (data && data.solely_code == 100000) {
 						self.$Utils.showToast('添加成功','success');
-						self.Router.redirectTo({route:{path:'/pages/address/address?name='+self.name}})
-						/* setTimeout(function() {
+						//self.Router.redirectTo({route:{path:'/pages/address/address?name='+self.name}})
+						uni.setStorageSync(self.name+'Address', self.submitData);
+						setTimeout(function() {
 							uni.navigateBack({
 								delta:1
 							})
-						}, 1000); */
+						}, 1000);
 					} else {
 						self.$Utils.showToast(data.msg,'success')
 					}
@@ -336,12 +344,17 @@
 				var phone = self.submitData.phone;
 				var newObject = self.$Utils.cloneForm(self.submitData);
 				delete newObject.star;
+				delete newObject.detail;
 				const pass = self.$Utils.checkComplete(newObject);
 
 				console.log('self.data.sForm', self.submitData)
 				console.log('pass', pass)
 				if (pass) {
-					
+					if (!/^([0-9]{3,4}-)?[0-9]{7,8}$/ || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(self.submitData.phone)) {
+						uni.setStorageSync('canClick', true);
+						self.$Utils.showToast('请输入正确的联系方式', 'none', 1000)
+						return;
+					}
 					if (self.id) {
 
 						self.addressUpdate();

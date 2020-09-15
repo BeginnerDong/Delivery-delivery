@@ -87,9 +87,9 @@
 	.couponList{padding: 0 5%;}
 	.couponList li{ width: 300px; height: 108px;box-sizing: border-box; margin: 20px auto 0 auto; display: flex; justify-content: space-between;align-items: center;padding: 15px;box-sizing: border-box;}
 	.couponList li .left{width: 80%; display: flex; justify-content: center;align-items: center; color: #fef57c;}
-	.couponList li .left .mny{font-size: 56px;margin-right: 5px;line-height: 50px; height: 50px;  }
+	.couponList li .left .mny{font-size: 30px;margin-right: 5px;line-height: 50px; height: 50px;  }
 	.couponList li .left .mny::before{content: '￥';font-size: 14px; font-weight: normal; }
-	.couponList li .left .tit{font-size: 26px;letter-spacing:4px;line-height: 30px;}
+	.couponList li .left .tit{font-size: 20px;letter-spacing:4px;line-height: 30px;}
 	.couponList li .left .time{font-size: 10px; color: #fff;}
 	.couponList li .right{width: 11%; display: flex; justify-content: center; align-items: center;text-align: right; color: #fff;font-size: 12px;padding: 5px;}
 </style>	
