@@ -549,7 +549,7 @@
 							is_use:1,
 							type:3,
 							start:['<=',currHours],
-							end:['>=',currHours]
+							end:['>',currHours]
 						},
 						condition:'=',
 					},

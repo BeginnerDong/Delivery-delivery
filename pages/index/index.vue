@@ -488,6 +488,7 @@
 						if (res.authSetting) {
 							self.$Utils.showToast('未授权位置信息，可在设置中开启', 'none')
 							setTimeout(function() {
+								self.getDefaultCity();
 								self.$Utils.finishFunc('getAllCityData');
 							}, 1000);
 							return
@@ -524,7 +525,7 @@
 				const postData = {};
 				postData.searchItem = {
 					thirdapp_id: 2,
-					is_default: 1
+					isdefault: 1
 				};
 				const callback = (res) => {
 					self.$Utils.finishFunc('getAllCityData');

@@ -616,7 +616,7 @@
 							city_id:uni.getStorageSync('city_id'),
 							fee_type:3,
 							is_use:1,
-							start:['<',currHours],
+							start:['<=',currHours],
 							end:['>',currHours],
 							type:1,
 						},
